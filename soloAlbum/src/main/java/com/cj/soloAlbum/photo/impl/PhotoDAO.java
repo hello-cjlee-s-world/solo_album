@@ -1,8 +1,21 @@
 package com.cj.soloAlbum.photo.impl;
 
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+import com.cj.soloAlbum.photo.PhotoVO;
+
+@Repository
 public class PhotoDAO {
-	private JdbcTemplate jdbctemplate;
+	@Autowired
+	private SqlSessionTemplate mybatis;
 	
+	public void insertPhoto(PhotoVO vo) {
+		mybatis.insert("PhotoDAO.insertPhoto", vo);
+	}
+	
+	public PhotoVO getPhoto(PhotoVO vo) {
+		return (PhotoVO) mybatis.selectOne("PhotoDAO.getPhoto", vo);
+	}
 }

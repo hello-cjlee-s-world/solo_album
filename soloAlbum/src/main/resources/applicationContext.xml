@@ -19,7 +19,7 @@
 <context:property-placeholder location="classpath:config/database.properties" />
 
 <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-	<property name="driverClassName" value="${jdbc.driver}" />
+	<property name="driverClassName" value="${jdbc.driverClassName}" />
 	<property name="url" value="${jdbc.url}" />
 	<property name="username" value="${jdbc.username}" />
 	<property name="password" value="${jdbc.password}" />
@@ -44,13 +44,24 @@
 		</tx:attributes>
 	</tx:advice>
 	<aop:config>
-		<aop:pointcut expression="execution(* com.springbook.biz..*(..))" id="txPointcut" />
+		<aop:pointcut expression="execution(* com.cj.soloAlbum..*(..))" id="txPointcut" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
 	</aop:config>
 	
-<!-- JdbcTemplate 설정 -->
-<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-    <constructor-arg ref="dataSource" />
-</bean>
+	
+<!-- Mybatis 설정 등록  -->
+	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:sql-map-config.xml"></property>
+	</bean>
+	
+<!-- spring과 Mybatis 연동 설정 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:sql-map-config.xml"></property>
+	</bean>
+	<bean class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSession"></constructor-arg>
+	</bean>
 	
 </beans>

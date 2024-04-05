@@ -23,10 +23,11 @@
 		</dependency>
 		<!-- MySQL -->
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>버전</version>
-		</dependency>
+	        <groupId>mysql</groupId>
+	        <artifactId>mysql-connector-java</artifactId>
+	        <version>5.1.31</version>
+    	</dependency>
+
 		<!-- Mybatis -->
 		<dependency>
 			<groupId>org.mybatis</groupId>

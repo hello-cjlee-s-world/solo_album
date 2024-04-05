@@ -1,5 +1,8 @@
 package com.cj.soloAlbum.photo.impl;
 
-public class PhotoService {
+import com.cj.soloAlbum.photo.PhotoVO;
 
+public interface PhotoService {
+	void insertPhoto(PhotoVO vo);
+	PhotoVO getPhoto(PhotoVO vo);
 }
