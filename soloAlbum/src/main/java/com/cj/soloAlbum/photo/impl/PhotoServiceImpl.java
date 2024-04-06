@@ -17,4 +17,10 @@ public class PhotoServiceImpl implements PhotoService {
 	public PhotoVO getPhoto(PhotoVO vo) {
 		return photoDAO.getPhoto(vo);
 	}
+	
+	// DBtest
+//	@Override
+//	public void testInsert() {
+//		photoDAO.testInsert();
+//	}
 }

@@ -31,4 +31,7 @@
 		</if>
 		ORDER BY SEQ DESC
 	</select>
+	<insert id="testInsert">
+		INSERT INTO test VALUES('1')
+	</insert>
 </mapper>

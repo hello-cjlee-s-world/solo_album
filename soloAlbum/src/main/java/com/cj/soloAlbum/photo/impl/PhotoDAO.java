@@ -18,4 +18,10 @@ public class PhotoDAO {
 	public PhotoVO getPhoto(PhotoVO vo) {
 		return (PhotoVO) mybatis.selectOne("PhotoDAO.getPhoto", vo);
 	}
+	
+	//DBtest
+//	public void testInsert() {
+//		System.out.println("DAO 실행");
+//		mybatis.insert("testInsert");
+//	}
 }
