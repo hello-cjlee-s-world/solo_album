@@ -5,7 +5,7 @@ import org.springframework.context.support.GenericXmlApplicationContext;
 
 import com.cj.soloAlbum.photo.impl.PhotoService;
 
-public class testDB {
+public class TestDB {
 
 	public static void main(String[] args) {
 		AbstractApplicationContext container = new GenericXmlApplicationContext("applicationContext.xml");
