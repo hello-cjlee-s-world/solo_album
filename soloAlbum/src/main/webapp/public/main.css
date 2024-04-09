@@ -1,0 +1,89 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	text-decoration: none;
+	list-style: none;	
+}
+#files {
+	display: none;
+}
+#photoButton {
+	width: 200px;
+	height: 100px;
+		
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	
+	border: 5px dotted green;
+	border-radius: 10%;
+	transition: 1s;
+}
+#photoButton:hover {
+	transform: scale(1.05);
+}
+#photoButton span {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	
+	text-align: center;
+	font-weight: 900;
+	font-size: 15px;
+	color: green;
+	line-height: 15px;
+	border: 3px solid green;
+	border-radius: 50%;
+	
+	transition: 1s;
+}
+#imgBox {
+	left:15px;
+	
+	margin-top: 20px;
+	margin-left: 20px;
+	
+	width: 100%;
+	
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-wrap: wrap;
+}
+.imgSmallBox {
+	width:400px;
+	height:100%;
+	margin-right: 5px;
+}
+.imgSmallBox .xspan {
+	z-index:2;
+	display: inline-block;
+	position: relative;
+	left: 5px;
+	top: -265px;
+	width: 20px;
+	height: 20px;
+	
+	text-align: center;
+	font-weight: 900;
+	font-size: 18px;
+	color: green;
+	line-height: 10px;
+	border: 3px solid green;
+	border-radius: 50%;
+	cursor: pointer;
+	
+	transition: 0.1s;
+}
+
+.imgSmallBox .xspan:hover {
+	transform: scale(1.15);
+	font-size: 19px;
+}
+
+.imgSmallBox .preview {
+	position:relative;
+	width: 100%;
+}
