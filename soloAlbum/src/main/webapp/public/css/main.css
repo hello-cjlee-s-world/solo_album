@@ -5,6 +5,9 @@
 	text-decoration: none;
 	list-style: none;	
 }
+html, body, form {
+	height: 100%;
+}
 #files {
 	display: none;
 }
@@ -15,21 +18,19 @@
 	margin-left: 20px;
 	
 	display: flex;
-	height: 150px;
+	height: 100%;
+
 	justify-content: flex-start;
 	align-items: center;
 	flex-wrap: nowrap;
 	overflow-x: scroll;
 }
 #photoButton {
-	width: 200px;
-	height: 120px;
-	margin: 0px 20px;
+	width: 20vh;
+	height: 100px;
+	margin: 15px 15px;
 	
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
+	display: inline-block;
 	
 	border: 5px dotted green;
 	border-radius: 10%;
@@ -39,28 +40,29 @@
 	transform: scale(1.05);
 	cursor: pointer;
 }
-#photoButton span {
+#photoButton img {
 	display: inline-block;
+	position: relative;
+	
 	width: 20px;
 	height: 20px;
 	
-	text-align: center;
-	font-weight: 900;
-	font-size: 15px;
-	color: green;
-	line-height: 15px;
-	border: 3px solid green;
-	border-radius: 50%;
+	left: 50%;
+	top: 50%;
+	transform: translateX(-50%) translateY(-50%);
 	
+	border-radius: 50%;
 	transition: 0.3s;
 }
 .imgSmallBox {
 	position: relative;
-	/* width:200px; */
-	height:100px;
 	margin-right: 20px;
+	
+	height: 80px;
+	
 	left:0;
 	box-shadow: 2px 2px 10px 3px grey;
+	z-index: 999;
 }
 .imgSmallBox:hover {
 	cursor: pointer;
@@ -74,12 +76,6 @@
 	width: 17px;
 	height: 17px;
 	
-	text-align: center;
-	font-weight: 900;
-	font-size: 15px;
-	color: green;
-	line-height: 10px;
-	border: 3px solid green;
 	border-radius: 50%;
 	cursor: pointer;
 	
@@ -88,28 +84,42 @@
 
 .imgSmallBox .xButton:hover {
 	transform: scale(1.15);
-	font-size: 17px;
-	line-height: 7px;
 }
 
 .imgSmallBox .preview {
 	position:relative;
-	height: 100%;
+	height: 80px;
 }
-#main_container {
-	margin-top: 30px;
+#mainContainer {
 	width: 100%;
-	height: 1000px;
+	height: 80%;
+	
+	position: relative;
+	
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-itmes: center;
+	flex-wrap: nowrap;
+	
+	bottom: 0;
 }
-#test_box {
-	margin-top: 300px; 
+.pages{
+	width:48%;
+	height:100%;
+	
+	display:flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-itmes: center;
+	flex-wrap: nowrap;
+}
+.AlbumBox {
 	width: 200px;
 	height: 150px;
 	
 	position: relative;
 	
-	left: 50%;
-	transform: translateX(-50%);
-	
-	background-color: skyblue; 
+	background-color: beige; 
 }
+
