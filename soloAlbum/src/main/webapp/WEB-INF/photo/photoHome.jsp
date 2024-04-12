@@ -28,22 +28,25 @@
 		</div>
 
 		<div id="mainContainer">
-			<div id="left_page" class="pages">
-				<div id="AlbumBox1" class="AlbumBox"></div>
-				<div id="AlbumBox2" class="AlbumBox"></div>
+			<div class="pages left_page">
+				<div id="albumBox1" class="albumBox" data-albumnum="1"></div>
+				<div id="albumBox2" class="albumBox" data-albumnum="2"></div>
 			</div>
-			<div id="rightPage" class="pages">
-				<div id="AlbumBox3" class="AlbumBox"></div>
-				<div id="AlbumBox4" class="AlbumBox"></div>
+			<div class="pages rightPage">
+				<div id="albumBox3" class="albumBox" data-albumnum="3"></div>
+				<div id="albumBox4" class="albumBox" data-albumnum="4"></div>
 			</div>
 			
-			
+			<button type="button" id="buttonPrevious" class='restButton'>이전 장</button>			
+			<button type="button" id="buttonNext">다음 장(추가)</button>
 		</div>
+		<div id="restBoxs"></div>
 	</form>
 </body>
+<script src="./public/js/touched.js"></script>
 <script src="./public/js/main.js"></script>
+<script src="./public/js/page.js"></script>
 <script type="text/javascript">
-let page = 0;
 	
 </script>
 </html>
