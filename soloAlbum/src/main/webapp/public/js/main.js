@@ -1,23 +1,8 @@
+const formData = new FormData(document.getElementById('insertPhotosForm'));
 let imgSwitch=0;
 let fileList=[];
 let num = 0;
 let imgAlbumDic = {};
-
-let startX=0, startY=0, offsetX=0, offsetY=0;
-const albumBox1 = document.getElementById('albumBox1');
-const albumBox2 = document.getElementById('albumBox2');
-const albumBox3 = document.getElementById('albumBox3');
-const albumBox4 = document.getElementById('albumBox4');
-
-const albumBoxRect1 = albumBox1.getBoundingClientRect();
-const albumBoxRect2 = albumBox2.getBoundingClientRect();
-const albumBoxRect3 = albumBox3.getBoundingClientRect();
-const albumBoxRect4 = albumBox4.getBoundingClientRect();
-
-let tW1=albumBoxRect1.width, tH1=albumBoxRect1.height, tX1=albumBoxRect1.x, tY1=albumBoxRect1.y
-let tW2=albumBoxRect2.width, tH2=albumBoxRect2.height, tX2=albumBoxRect2.x, tY2=albumBoxRect2.y
-let tW3=albumBoxRect3.width, tH3=albumBoxRect3.height, tX3=albumBoxRect3.x, tY3=albumBoxRect3.y
-let tW4=albumBoxRect4.width, tH4=albumBoxRect4.height, tX4=albumBoxRect4.x, tY4=albumBoxRect4.y
 
 const files = document.querySelector("#files");
 // input의 onchange에서 this를 인자로 넣었기 때문에 input은 files.addEventListener("change" (e))의 e.target 과 같다
@@ -65,6 +50,22 @@ const fileChange = (input) => {
 					});
 					// img 드래그를 위한 코드
 					imgSmallBox.addEventListener("mousedown", function(e){
+					// 앨범 구역에 태그할때 구역에 이미지가 있는지 검색하는데, 
+					// 전역으로 해놓으면 페이지 넘어가도 이전 객체들을 그대로 바라보기 때문에 아래 객체들 여기 위치
+						const albumBox1 = document.getElementById('albumBox1');
+						const albumBox2 = document.getElementById('albumBox2');
+						const albumBox3 = document.getElementById('albumBox3');
+						const albumBox4 = document.getElementById('albumBox4');
+						
+						const albumBoxRect1 = albumBox1.getBoundingClientRect();
+						const albumBoxRect2 = albumBox2.getBoundingClientRect();
+						const albumBoxRect3 = albumBox3.getBoundingClientRect();
+						const albumBoxRect4 = albumBox4.getBoundingClientRect();
+						
+						let tW1=albumBoxRect1.width, tH1=albumBoxRect1.height, tX1=albumBoxRect1.x, tY1=albumBoxRect1.y
+						let tW2=albumBoxRect2.width, tH2=albumBoxRect2.height, tX2=albumBoxRect2.x, tY2=albumBoxRect2.y
+						let tW3=albumBoxRect3.width, tH3=albumBoxRect3.height, tX3=albumBoxRect3.x, tY3=albumBoxRect3.y
+						let tW4=albumBoxRect4.width, tH4=albumBoxRect4.height, tX4=albumBoxRect4.x, tY4=albumBoxRect4.y
 					    // 드래그시 마우스 클릭 동작 방지
 					    e.preventDefault();
 					    // 이동중이거나 마우스 드래그 상태가 아닐때의 이벤트
@@ -176,23 +177,42 @@ const fileChange = (input) => {
 				reader.readAsDataURL(input.files[i]);
 			}	
 			
-			// 리스트에 파일 추가
-			//console.log(new FormData(document.getElementById('insertPhotosForm')));
-			//console.log(new FormData(document.getElementById('insertPhotosForm')).getAll('uploadFile'));
-			const formData = new FormData(document.getElementById('insertPhotosForm')).getAll('uploadFile');
-			formData.forEach(file => {
+			// formData에서 파일 뽑아서 리스트에 파일 추가
+			const formDataFiles = formData.getAll('uploadFile');
+			formDataFiles.forEach(file => {
 				fileList.push(file);
 			});
-			//console.log(fileList);
-	
 	  } else {
 	    document.getElementById('preview').src = "";
 	  }
 }
 
+// input file 클릭 이벤트
 const handleClick = () => {
 	files.click();
 }
 
+// 데이터 서버로 보내기
+const submitButton = document.getElementById('submitButton');
+submitButton.addEventListener('click', () => {
+	formData.append('key','value');
+});
+
+const submitButton3 = document.getElementById('submitButton3');
+submitButton3.addEventListener('click', () => {
+	console.log('================================================');
+	console.log('formData');
+	console.log(formData.has('uploadFile'));
+	console.log(formData.getAll('uploadFile'));
+	console.log(formData.has('key'));
+	console.log('================================================');
+	const formData2 = new FormData(document.getElementById('insertPhotosForm'));
+	console.log('formData2');
+	console.log(formData2.has('uploadFile'));
+	console.log(formData2.getAll('uploadFile'));
+	console.log(formData2.has('key'));
+	console.log('================================================')
+	document.getElementById('insertPhotosForm').submit();
+});
 
 

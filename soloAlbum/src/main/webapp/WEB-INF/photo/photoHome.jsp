@@ -8,8 +8,9 @@
 <title>file test</title>
 </head>
 <body>
+	<!-- 사진 선택 -->
 	<form action="insertPhotos.do" method="post"
-		enctype="multipart/form-data" id="insertPhotosForm" name="insertPhotosForm">
+		enctype="multipart/form-data" id="insertPhotosForm">
 		<div id="photoContainer">
 			<div id="imgBox">
 				<div>
@@ -21,12 +22,16 @@
 				</div>
 			</div>
 			<div>
-				<div colspan="2" align="center">
-					<input type="submit" value="보내기" >
+				<div align="center">
+					<button type="button" id="submitButton">button</button>
+					<button type="submit" id="submitButton2">submit</button>
+					<button type="button" id="submitButton3">보기</button>
 				</div>
 			</div>
 		</div>
 
+
+		<!-- 앨범 구역 -->
 		<div id="mainContainer">
 			<div class="pages left_page">
 				<div id="albumBox1" class="albumBox" data-albumnum="1"></div>
@@ -36,9 +41,20 @@
 				<div id="albumBox3" class="albumBox" data-albumnum="3"></div>
 				<div id="albumBox4" class="albumBox" data-albumnum="4"></div>
 			</div>
-			
-			<button type="button" id="buttonPrevious" class='restButton'>이전 장</button>			
-			<button type="button" id="buttonNext">다음 장(추가)</button>
+
+			<div id="buttonPageContainer">
+				<div id="buttonBox">
+					<button type="button" id="buttonPrevious" class='restButton'>이전
+						장</button>
+					<button type="button" id="buttonNext">다음 장(추가)</button>
+				</div>
+				<div id="pageBox">
+					<div>
+						<span id="currentPageNum">1</span>/<span id="totalPageNum">1</span>
+					</div>
+				</div>
+			</div>
+
 		</div>
 		<div id="restBoxs"></div>
 	</form>
