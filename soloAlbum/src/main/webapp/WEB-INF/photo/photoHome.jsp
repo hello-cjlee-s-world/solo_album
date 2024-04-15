@@ -1,14 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <link rel="stylesheet" href="./public/css/main.css">
 <title>file test</title>
 </head>
 <body>
-	<!-- ªÁ¡¯ º±≈√ -->
+	<!-- ÏÇ¨ÏßÑ ÏÑ†ÌÉù -->
 	<form action="insertPhotos.do" method="post"
 		enctype="multipart/form-data" id="insertPhotosForm">
 		<div id="photoContainer">
@@ -23,30 +23,28 @@
 			</div>
 			<div>
 				<div align="center">
-					<button type="button" id="submitButton">button</button>
-					<button type="submit" id="submitButton2">submit</button>
-					<button type="button" id="submitButton3">∫∏±‚</button>
+					<button type="button" id="submitButton">Î≥¥ÎÇ¥Í∏∞</button>
 				</div>
 			</div>
 		</div>
 
 
-		<!-- æŸπ¸ ±∏ø™ -->
+		<!-- Ïï®Î≤î Íµ¨Ïó≠ -->
 		<div id="mainContainer">
 			<div class="pages left_page">
-				<div id="albumBox1" class="albumBox" data-albumnum="1"></div>
-				<div id="albumBox2" class="albumBox" data-albumnum="2"></div>
+				<div id="albumBox1" class="albumBox" data-albumnum="0"></div>
+				<div id="albumBox2" class="albumBox" data-albumnum="1"></div>
 			</div>
 			<div class="pages rightPage">
-				<div id="albumBox3" class="albumBox" data-albumnum="3"></div>
-				<div id="albumBox4" class="albumBox" data-albumnum="4"></div>
+				<div id="albumBox3" class="albumBox" data-albumnum="2"></div>
+				<div id="albumBox4" class="albumBox" data-albumnum="3"></div>
 			</div>
 
 			<div id="buttonPageContainer">
 				<div id="buttonBox">
-					<button type="button" id="buttonPrevious" class='restButton'>¿Ã¿¸
-						¿Â</button>
-					<button type="button" id="buttonNext">¥Ÿ¿Ω ¿Â(√ﬂ∞°)</button>
+					<button type="button" id="buttonPrevious" class='restButton'>Ïù¥Ï†Ñ
+						Ïû•</button>
+					<button type="button" id="buttonNext">Îã§Ïùå Ïû•(Ï∂îÍ∞Ä)</button>
 				</div>
 				<div id="pageBox">
 					<div>
@@ -59,9 +57,9 @@
 		<div id="restBoxs"></div>
 	</form>
 </body>
-<script src="./public/js/touched.js"></script>
-<script src="./public/js/main.js"></script>
-<script src="./public/js/page.js"></script>
+<script src="./public/js/touched.js" charset="utf-8"></script>
+<script src="./public/js/main.js" charset="utf-8"></script>
+<script src="./public/js/page.js" charset="utf-8"></script>
 <script type="text/javascript">
 	
 </script>

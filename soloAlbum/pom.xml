@@ -23,10 +23,10 @@
 		</dependency>
 		<!-- MySQL -->
 		<dependency>
-	        <groupId>mysql</groupId>
-	        <artifactId>mysql-connector-java</artifactId>
-	        <version>8.0.11</version>
-    	</dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.11</version>
+		</dependency>
 
 		<!-- Mybatis -->
 		<dependency>
@@ -165,6 +165,12 @@
 			<artifactId>junit</artifactId>
 			<version>4.7</version>
 			<scope>test</scope>
+		</dependency>
+		<!-- json to map -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.7.0</version>
 		</dependency>
 	</dependencies>
 	<build>

@@ -11,6 +11,7 @@ public class PhotoVO {
 	String name;
 	int order_num;
 	int create_time;
+	// soloAlbum 프로젝트에서는 쓸 일 없음
 	private List<MultipartFile> uploadFile;
 	
 	

@@ -1,4 +1,6 @@
 const formData = new FormData(document.getElementById('insertPhotosForm'));
+const imgBox = document.querySelector('#imgBox');
+const deletedPhoto = new Blob();
 let imgSwitch=0;
 let fileList=[];
 let num = 0;
@@ -9,8 +11,6 @@ const files = document.querySelector("#files");
 // 이미지 프리뷰 설정
 const fileChange = (input) => {
 	if (input.files && input.files[0]) {
-		const imgBox = document.querySelector('#imgBox');
-	
 		for(let i=0; i < input.files.length; i++){
 				var reader = new FileReader();
 				reader.onload = function(e) {
@@ -27,7 +27,6 @@ const fileChange = (input) => {
 					imgSmallBox.classList.add('imgSmallBox');
 					imgSmallBox.setAttribute('data-num', String(num));
 					num += 1
-					//console.log(imgSmallBox.dataset.num);
 					imgSmallBox.appendChild(img);
 					imgSmallBox.appendChild(xButton);
 					imgBox.appendChild(imgSmallBox);
@@ -37,13 +36,15 @@ const fileChange = (input) => {
 					// x 버튼 클릭시 사진 삭제 이벤트
 						e.stopPropagation();
 						e.preventDefault();
+						// 이미지 : 앨범구역 dict 에서 삭제
+						delete imgAlbumDic[imgSmallBox.dataset.num];
+						// 파일리스트에서 삭제
+						console.log(imgSmallBox.dataset.num);
+						//delete fileList[imgSmallBox.dataset.num]
+						fileList[imgSmallBox.dataset.num] = deletedPhoto;
 						// blob URL 삭제
 						URL.revokeObjectURL(xButton.parentNode.childNodes[0].src);
 						xButton.parentNode.parentNode.removeChild(xButton.parentNode);
-						// 파일리스트에서 삭제
-						delete fileList[imgSmallBox.dataset.num]
-						// 이미지 : 앨범구역 dict 에서 삭제
-						delete imgAlbumDic[imgSmallBox.dataset.num];
 					});
 					imgSmallBox.addEventListener('dragstart', (e) => {
 						alert('drag test');
@@ -79,9 +80,6 @@ const fileChange = (input) => {
 						    //imgSmallBox.style.boxShadow = '2px 2px 20px 10px grey'
 						    const clientRect = imgSmallBox.getBoundingClientRect();
 						    // 이미지 드래그시 마우스 위치의 좌표로 이동
-						    //const mainContainer = document.querySelector('#mainContainer');
-						    //console.log(mainContainer);
-						    //mainContainer.appendChild(imgSmallBox);
 						    imgSmallBox.style.left = e.clientX - (clientRect.width/2) + 'px';
 						    imgSmallBox.style.top = e.clientY - (clientRect.height/2) + 'px';
 						    imgSmallBox.style.transition='0s';
@@ -131,28 +129,24 @@ const fileChange = (input) => {
 								if(imgSwitch==1 && albumBox1.childElementCount < 1) {
 									albumBox1.appendChild(imgSmallBox);
 									imgAlbumDic[imgSmallBox.dataset.num] = albumBox1.dataset.albumnum;
-									//console.log(imgAlbumDic);
 									imgSwitch=0;
 								}
 							} else if(touched(clientRect, tX2, tY2, tW2, tH2)) {
 								if(imgSwitch==1 && albumBox2.childElementCount < 1) {
 									albumBox2.appendChild(imgSmallBox);
 									imgAlbumDic[imgSmallBox.dataset.num] = albumBox2.dataset.albumnum;
-									//console.log(imgAlbumDic);
 									imgSwitch=0;
 								}
 							} else if(touched(clientRect, tX3, tY3, tW3, tH3)) {
 								if(imgSwitch==1 && albumBox3.childElementCount < 1) {
 									albumBox3.appendChild(imgSmallBox);
 									imgAlbumDic[imgSmallBox.dataset.num] = albumBox3.dataset.albumnum;
-									//console.log(imgAlbumDic);
 									imgSwitch=0;
 								}
 							} else if(touched(clientRect, tX4, tY4, tW4, tH4)) {
 								if(imgSwitch==1 && albumBox4.childElementCount < 1) {
 									albumBox4.appendChild(imgSmallBox);
 									imgAlbumDic[imgSmallBox.dataset.num] = albumBox4.dataset.albumnum;
-									//console.log(imgAlbumDic);
 									imgSwitch=0;
 								}
 							} else { // 구역 바깥에서 놓았을 경우 이벤트
@@ -175,13 +169,13 @@ const fileChange = (input) => {
 					});
 				};
 				reader.readAsDataURL(input.files[i]);
-			}	
-			
-			// formData에서 파일 뽑아서 리스트에 파일 추가
-			const formDataFiles = formData.getAll('uploadFile');
-			formDataFiles.forEach(file => {
-				fileList.push(file);
-			});
+			}
+			// 파일 목록에 넣기
+			const inputFileList = input.files;
+			for(let i=0; i<inputFileList.length; i++) {
+				fileList.push(inputFileList[i]);						
+			}
+			console.log(fileList);
 	  } else {
 	    document.getElementById('preview').src = "";
 	  }
@@ -193,26 +187,37 @@ const handleClick = () => {
 }
 
 // 데이터 서버로 보내기
-const submitButton = document.getElementById('submitButton');
-submitButton.addEventListener('click', () => {
-	formData.append('key','value');
+document.getElementById('submitButton').addEventListener('click', () => {
+	if(imgBox.childElementCount <= 1){
+		formData.delete('uploadFile');
+		// 파일 formData에 추가
+		fileList.forEach(file => {
+			formData.append('uploadFile', file, file.name);
+			//console.log(file.name);
+		});
+		console.log(fileList);
+		console.log(JSON.stringify(imgAlbumDic));
+		// 이미지:앨범 구역 맵핑 정보 Object에서 JSON으로 변환 후 추가
+		formData.append('imgAlbumDic', JSON.stringify(imgAlbumDic));
+		fetch('insertPhotos.do', {
+			method: 'POST',
+			cache: 'no-cache',
+			body: formData
+		})
+		//.then((response) => response.json())
+		.then((loc) => {
+			formData.delete('uploadFile');
+			formData.delete('imgAlbumDic');
+			console.log(loc);
+			//location.href=loc.url;
+		})
+		.catch((err) => {
+			console.error(err);
+		});
+	} else {
+		alert('사진을 전부 등록하거나 삭제해주세요.');
+	}
 });
 
-const submitButton3 = document.getElementById('submitButton3');
-submitButton3.addEventListener('click', () => {
-	console.log('================================================');
-	console.log('formData');
-	console.log(formData.has('uploadFile'));
-	console.log(formData.getAll('uploadFile'));
-	console.log(formData.has('key'));
-	console.log('================================================');
-	const formData2 = new FormData(document.getElementById('insertPhotosForm'));
-	console.log('formData2');
-	console.log(formData2.has('uploadFile'));
-	console.log(formData2.getAll('uploadFile'));
-	console.log(formData2.has('key'));
-	console.log('================================================')
-	document.getElementById('insertPhotosForm').submit();
-});
 
 
