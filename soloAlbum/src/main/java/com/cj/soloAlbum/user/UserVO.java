@@ -1,4 +1,4 @@
-package com.cj.soloAlbum.user.impl;
+package com.cj.soloAlbum.user;
 
 public class UserVO {
 	String id;

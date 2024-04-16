@@ -5,10 +5,13 @@
 	<!-- Alias 설정 -->
 	<typeAliases>
 		<typeAlias alias="photo" type="com.cj.soloAlbum.photo.PhotoVO" />
+		<typeAlias alias="user" type="com.cj.soloAlbum.user.UserVO" />
+		<typeAlias alias="album" type="com.cj.soloAlbum.album.AlbumVO" />
 	</typeAliases>
 	
 	 <!-- SQL Mapper 설정 -->
 	 <mappers>
 	 	<mapper resource="mapping/photo-mapping.xml" />
+	 	<mapper resource="mapping/user-mapping.xml" />
 	 </mappers>
 </configuration>

@@ -11,9 +11,9 @@ public class PhotoVO {
 	String name;
 	int order_num;
 	int create_time;
+	String albumId;
 	// soloAlbum 프로젝트에서는 쓸 일 없음
 	private List<MultipartFile> uploadFile;
-	
 	
 	public String getId() {
 		return id;
@@ -46,7 +46,12 @@ public class PhotoVO {
 	public void setUploadFile(List<MultipartFile> uploadFile) {
 		this.uploadFile = uploadFile;
 	}
-	
+	public String getAlbumId() {
+		return albumId;
+	}
+	public void setAlbumId(String albumId) {
+		this.albumId = albumId;
+	}
 	@Override
 	public String toString() {
 		return "PhotoVO [id="+id+", name="+name+", order_num="+order_num+", "

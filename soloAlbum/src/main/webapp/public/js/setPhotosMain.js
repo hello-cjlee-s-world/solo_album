@@ -25,7 +25,8 @@ const fileChange = (input) => {
 					img.classList.add('preview');
 					imgSmallBox.draggable="true";
 					imgSmallBox.classList.add('imgSmallBox');
-					imgSmallBox.setAttribute('data-num', String(num));
+					//imgSmallBox.setAttribute('data-num', String(num));
+					imgSmallBox.setAttribute('data-name', input.files[i].name);
 					num += 1
 					imgSmallBox.appendChild(img);
 					imgSmallBox.appendChild(xButton);
@@ -37,18 +38,19 @@ const fileChange = (input) => {
 						e.stopPropagation();
 						e.preventDefault();
 						// 이미지 : 앨범구역 dict 에서 삭제
-						delete imgAlbumDic[imgSmallBox.dataset.num];
+						delete imgAlbumDic[imgSmallBox.dataset.name];
 						// 파일리스트에서 삭제
-						console.log(imgSmallBox.dataset.num);
-						//delete fileList[imgSmallBox.dataset.num]
-						fileList[imgSmallBox.dataset.num] = deletedPhoto;
+						for(let i=0; i<fileList.length; i++) {
+							if(fileList[i].name == imgSmallBox.dataset.name){
+								fileList[i] = deletedPhoto;
+								break;
+							}
+						}
 						// blob URL 삭제
 						URL.revokeObjectURL(xButton.parentNode.childNodes[0].src);
 						xButton.parentNode.parentNode.removeChild(xButton.parentNode);
 					});
-					imgSmallBox.addEventListener('dragstart', (e) => {
-						alert('drag test');
-					});
+					
 					// img 드래그를 위한 코드
 					imgSmallBox.addEventListener("mousedown", function(e){
 					// 앨범 구역에 태그할때 구역에 이미지가 있는지 검색하는데, 
@@ -128,31 +130,31 @@ const fileChange = (input) => {
 						    if(touched(clientRect, tX1, tY1, tW1, tH1)){
 								if(imgSwitch==1 && albumBox1.childElementCount < 1) {
 									albumBox1.appendChild(imgSmallBox);
-									imgAlbumDic[imgSmallBox.dataset.num] = albumBox1.dataset.albumnum;
+									imgAlbumDic[imgSmallBox.dataset.name] = albumBox1.dataset.albumnum;
 									imgSwitch=0;
 								}
 							} else if(touched(clientRect, tX2, tY2, tW2, tH2)) {
 								if(imgSwitch==1 && albumBox2.childElementCount < 1) {
 									albumBox2.appendChild(imgSmallBox);
-									imgAlbumDic[imgSmallBox.dataset.num] = albumBox2.dataset.albumnum;
+									imgAlbumDic[imgSmallBox.dataset.name] = albumBox2.dataset.albumnum;
 									imgSwitch=0;
 								}
 							} else if(touched(clientRect, tX3, tY3, tW3, tH3)) {
 								if(imgSwitch==1 && albumBox3.childElementCount < 1) {
 									albumBox3.appendChild(imgSmallBox);
-									imgAlbumDic[imgSmallBox.dataset.num] = albumBox3.dataset.albumnum;
+									imgAlbumDic[imgSmallBox.dataset.name] = albumBox3.dataset.albumnum;
 									imgSwitch=0;
 								}
 							} else if(touched(clientRect, tX4, tY4, tW4, tH4)) {
 								if(imgSwitch==1 && albumBox4.childElementCount < 1) {
 									albumBox4.appendChild(imgSmallBox);
-									imgAlbumDic[imgSmallBox.dataset.num] = albumBox4.dataset.albumnum;
+									imgAlbumDic[imgSmallBox.dataset.name] = albumBox4.dataset.albumnum;
 									imgSwitch=0;
 								}
 							} else { // 구역 바깥에서 놓았을 경우 이벤트
 							    if(imgSwitch==1) {
 									imgBox.insertBefore(imgSmallBox, imgBox.childNodes[2]);
-									delete imgAlbumDic[imgSmallBox.dataset.num];			    
+									delete imgAlbumDic[imgSmallBox.dataset.name];			    
 								    imgSwitch=0;
 							    }							
 							}
@@ -175,7 +177,6 @@ const fileChange = (input) => {
 			for(let i=0; i<inputFileList.length; i++) {
 				fileList.push(inputFileList[i]);						
 			}
-			console.log(fileList);
 	  } else {
 	    document.getElementById('preview').src = "";
 	  }
@@ -193,10 +194,7 @@ document.getElementById('submitButton').addEventListener('click', () => {
 		// 파일 formData에 추가
 		fileList.forEach(file => {
 			formData.append('uploadFile', file, file.name);
-			//console.log(file.name);
 		});
-		console.log(fileList);
-		console.log(JSON.stringify(imgAlbumDic));
 		// 이미지:앨범 구역 맵핑 정보 Object에서 JSON으로 변환 후 추가
 		formData.append('imgAlbumDic', JSON.stringify(imgAlbumDic));
 		fetch('insertPhotos.do', {

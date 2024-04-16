@@ -3,23 +3,42 @@
 
 <mapper namespace="PhotoDAO">
 	<insert id="insertPhoto">
-		INSERT INTO photo(name, order_num, create_time)
-		VALUES(#{name}, #{order_num}, #{create_time})
+		INSERT INTO photos(name, order_num, create_time,
+		albumid)
+		VALUES(#{name}, #{order_num}, #{create_time}, #{albumId})
 	</insert>
 
-	<update id="updatePhoto">
-		UPDATE BOARD SET TITLE=#{title}, CONTENT=#{content}
-		WHERE SEQ=#{seq}
-	</update>
+	<select id="getAllPhoto" resultType="photo">
+		SELECT * FROM photos
+	</select>
+
+	<select id="getPhoto" resultType="photo">
+		SELECT id, name, order_num FROM
+		photos WHERE albumid=#{albumid}
+	</select>
+
+	<!-- album 관련 -->
+	<select id="getMaxAlbum" resultType="Integer">
+		SELECT MAX(id) FROM albums
+	</select>
+
+	<select id="getAllAlbum" resultType="album">
+		SELECT * FROM albums
+	</select>
+
+	<insert id="insertAlbum">
+		INSERT INTO albums(id, userid)
+		VALUES(#{id},
+		#{userid})
+	</insert>
+
+
+
 
 	<delete id="deletePhoto">
 		DELETE BOARD WHERE SEQ=#{seq}
 	</delete>
 
-	<select id="getPhoto" resultType="photo">
-		SELECT * FROM BOARD WHERE
-		SEQ=#{seq}
-	</select>
 
 	<select id="getPhotoList" resultType="photo">
 		SELECT *
