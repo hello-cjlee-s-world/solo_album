@@ -14,7 +14,7 @@ WEB-INF 폴더는 절대 브라우저에서 접근할 수 없다. 따라서 MVC 
 	<property name="prefix" value="/WEB-INF/photo/"></property>
 	<property name="suffix" value=".jsp"></property>
 </bean>
- 
+
 <!--  -->
 
 <context:component-scan base-package="com.cj.view" use-default-filters="false">

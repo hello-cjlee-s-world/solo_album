@@ -1,7 +1,14 @@
 package com.cj.view.photo;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.lang.System.Logger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,11 +17,20 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,25 +68,27 @@ public class PhotoController {
 //			System.out.println(multiFileList.get(i).getOriginalFilename());
 //		}
 		PhotoVO vo = new PhotoVO();
-		AlbumVO albumVO = new AlbumVO(); 
+		AlbumVO albumVO = new AlbumVO();
 		// 앨범 등록
-		String albumNum = "0";	
-		if(photoService.getAllAlbum().size() != 0) {		
-			albumNum = String.valueOf(photoService.getMaxAlbum()+1);
+		String albumNum = "0";
+		if (photoService.getAllAlbum().size() != 0) {
+			albumNum = String.valueOf(photoService.getMaxAlbum() + 1);
 		}
 		System.out.println(albumNum);
 		albumVO.setId(albumNum);
 		albumVO.setUserid(getCookie(request, "userType"));
 		photoService.insertAlbum(albumVO);
-		
+
 		String path = "C:\\Users\\cndwn\\Desktop\\testUploads";
+		// String path = "./";
 		String root = path + "\\uploadFiles";
 
 		File file = new File(root);
 
 		// 만약 uploadFiles 폴더가 없으면 생성해라 라는뜻
-		if (!file.exists())
-			file.mkdirs();
+		/*
+		 * if (!file.exists()) file.mkdirs();
+		 */
 
 		List<MultipartFile> fileNameList = new ArrayList<MultipartFile>();
 		List<Map<String, String>> fileList = new ArrayList<Map<String, String>>();
@@ -79,6 +97,7 @@ public class PhotoController {
 			// 업로드할 폴더 설정
 			String originFile = multiFileList.get(i).getOriginalFilename();
 			if (!originFile.equals("blob") && originFile != null) {
+				System.out.println(originFile);
 				String ext = originFile.substring(originFile.lastIndexOf("."));
 				String changeFile = UUID.randomUUID().toString() + ext;
 
@@ -89,13 +108,10 @@ public class PhotoController {
 				fileList.add(map);
 				// blob 인 이미지 제외한 정상 이미지만 새 list에 담기
 				fileNameList.add(multiFileList.get(i));
-			} else {
-				Map<String, String> map = new HashMap<String, String>();
-				map.put("originFile", "");
-				map.put("changeFile", "");
-				fileList.add(map);
 			}
 		}
+		System.out.println(fileNameList);
+		System.out.println(fileList);
 
 		// 파일업로드
 		try {
@@ -125,16 +141,38 @@ public class PhotoController {
 		return "redirect:index.jsp";
 	}
 
+	// 앨범 표출
 	@RequestMapping(value = "/showPhotos.do", method = RequestMethod.GET)
-	public String insertPhotos(HttpServletRequest request, Model model) {
+	public String insertPhotos(HttpServletRequest request, Model model) throws IOException {
 		String user = getCookie(request, "user");
-		
+		String path = "C:\\Users\\cndwn\\Desktop\\testUploads\\uploadFiles";
+		// String path = ".\\uploadFiles";
+
 		String albumNum = String.valueOf(photoService.getMaxAlbum());
 		List<PhotoVO> resultVO = photoService.getPhoto(albumNum);
-		System.out.println(resultVO);
+		List<String> fileUrls = new ArrayList();
+		for (PhotoVO photo : resultVO) {
+			//fileUrls.add(path + File.separator + photo.getName()); // 파일의 실제 경로
+			fileUrls.add(photo.getName()); 
+		}
+		
 		model.addAttribute("photosInfo", resultVO);
+		model.addAttribute("fileUrls", fileUrls);
 		return ("showPhotos");
 	}
+	
+	@RequestMapping(value = "/image-manual-response", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> getImageAsResponseEntity(@RequestParam("fileName") String fileName) throws IOException {
+		HttpHeaders headers = new HttpHeaders();
+		String path = "C:\\Users\\cndwn\\Desktop\\testUploads\\uploadFiles";
+	    InputStream in = new BufferedInputStream(new FileInputStream(path + File.separator + fileName));
+	    byte[] media = IOUtils.toByteArray(in);
+	    headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+	    
+	    ResponseEntity<byte[]> responseEntity = new ResponseEntity(media, headers, HttpStatus.OK);
+	    return responseEntity;
+	}
+	
 
 	// 쿠키 가져오기
 	public String getCookie(HttpServletRequest request, String sName) {
