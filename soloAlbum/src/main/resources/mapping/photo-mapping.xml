@@ -26,10 +26,16 @@
 		SELECT * FROM albums
 	</select>
 
+	<select id="getPagePerImage" resultType="String">
+		SELECT pagePerImage FROM
+		albums WHERE id=#{albumid}
+	</select>
+
 	<insert id="insertAlbum">
-		INSERT INTO albums(id, userid)
+		INSERT INTO albums(id, userid, pagePerImage)
 		VALUES(#{id},
-		#{userid})
+		#{userid},
+		#{pagePerImage})
 	</insert>
 
 

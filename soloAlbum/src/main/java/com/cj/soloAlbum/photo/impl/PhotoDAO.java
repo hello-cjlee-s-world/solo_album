@@ -17,13 +17,13 @@ public class PhotoDAO {
 	public void insertPhoto(PhotoVO vo) {
 		mybatis.insert("PhotoDAO.insertPhoto", vo);
 	}
-	
 	public PhotoVO getAllPhoto(PhotoVO vo) {
 		return (PhotoVO) mybatis.selectOne("getAllPhoto.getPhoto", vo);
 	}
 	public List<PhotoVO> getPhoto(String albumId) {
 		return mybatis.selectList("PhotoDAO.getPhoto", albumId);
 	}
+	
 	public void insertAlbum(AlbumVO vo) {
 		mybatis.insert("PhotoDAO.insertAlbum", vo);
 	}
@@ -32,6 +32,9 @@ public class PhotoDAO {
 	}
 	public int getMaxAlbum() {
 		return mybatis.selectOne("PhotoDAO.getMaxAlbum");
+	}
+	public String getPagePerImage(String albumid) {
+		return mybatis.selectOne("PhotoDAO.getPagePerImage", albumid);
 	}
 	//DBtest
 //	public void testInsert() {

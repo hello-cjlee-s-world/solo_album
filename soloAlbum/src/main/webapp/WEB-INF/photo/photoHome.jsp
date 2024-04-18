@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="./public/css/main.css">
+<link rel="stylesheet" href="./public/css/setPhotosMain.css">
 <title>file test</title>
 </head>
 <body>
@@ -33,12 +33,12 @@
 		<!-- 앨범 구역 -->
 		<div id="mainContainer">
 			<div class="pages left_page">
-				<div id="albumBox1" class="albumBox" data-albumnum="0"></div>
-				<div id="albumBox2" class="albumBox" data-albumnum="1"></div>
+				<div id="albumBox1" class="albumBox page1" data-albumnum="0"></div>
+				<div id="albumBox2" class="albumBox page1" data-albumnum="1"></div>
 			</div>
 			<div class="pages rightPage">
-				<div id="albumBox3" class="albumBox" data-albumnum="2"></div>
-				<div id="albumBox4" class="albumBox" data-albumnum="3"></div>
+				<div id="albumBox3" class="albumBox page1" data-albumnum="2"></div>
+				<div id="albumBox4" class="albumBox page1" data-albumnum="3"></div>
 			</div>
 
 			<div id="buttonPageContainer">

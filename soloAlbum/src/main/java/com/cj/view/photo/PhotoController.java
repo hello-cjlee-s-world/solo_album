@@ -60,36 +60,40 @@ public class PhotoController {
 	@RequestMapping(value = "/insertPhotos.do", method = RequestMethod.POST)
 	public String insertPhotos(@RequestParam("uploadFile") List<MultipartFile> multiFileList,
 			HttpServletRequest request) throws IllegalStateException, IOException {
-		@SuppressWarnings("unchecked")
-		// js에서 dict 형태로 들어온 데이터 json으로 변환하기 위한 클래스
-		Map<String, String> imgAlbumDic = new ObjectMapper().readValue(request.getParameter("imgAlbumDic"),
-				HashMap.class);
-//		for (int i = 0; i < multiFileList.size(); i++) {
-//			System.out.println(multiFileList.get(i).getOriginalFilename());
-//		}
 		PhotoVO vo = new PhotoVO();
 		AlbumVO albumVO = new AlbumVO();
-		// 앨범 등록
+		
+		@SuppressWarnings("unchecked")
+		// js에서 dict 형태로 들어온 데이터 json으로 변환하기 위한 클래스
+		// 이미지:앨범 구역 맵핑 정보
+		Map<String, String> imgAlbumDic = new ObjectMapper().readValue(request.getParameter("imgAlbumDic"),
+				HashMap.class);		
+		// 페이지:사진개수 맵핑 정보
+		@SuppressWarnings("unchecked")
+		Map<String, String> pagePerImage = new ObjectMapper().readValue(request.getParameter("pagePerImage"),
+				HashMap.class);
+		
+		String pagePerImageString ="";
+		for(String key : pagePerImage.keySet()) {
+			pagePerImageString = pagePerImageString + String.valueOf(key) + String.valueOf(pagePerImage.get(key)); 
+		}
+		
+		// 앨범 정보 등록
 		String albumNum = "0";
 		if (photoService.getAllAlbum().size() != 0) {
 			albumNum = String.valueOf(photoService.getMaxAlbum() + 1);
 		}
-		System.out.println(albumNum);
 		albumVO.setId(albumNum);
 		albumVO.setUserid(getCookie(request, "userType"));
+		albumVO.setPagePerImage(pagePerImageString);
 		photoService.insertAlbum(albumVO);
-
+		
+		// 사진 파일 등록할 경로 설정
 		String path = "C:\\Users\\cndwn\\Desktop\\testUploads";
-		// String path = "./";
 		String root = path + "\\uploadFiles";
-
-		File file = new File(root);
-
-		// 만약 uploadFiles 폴더가 없으면 생성해라 라는뜻
-		/*
-		 * if (!file.exists()) file.mkdirs();
-		 */
-
+//		File file = new File(root);
+//		if (!file.exists()) file.mkdirs();
+		 
 		List<MultipartFile> fileNameList = new ArrayList<MultipartFile>();
 		List<Map<String, String>> fileList = new ArrayList<Map<String, String>>();
 
@@ -97,7 +101,6 @@ public class PhotoController {
 			// 업로드할 폴더 설정
 			String originFile = multiFileList.get(i).getOriginalFilename();
 			if (!originFile.equals("blob") && originFile != null) {
-				System.out.println(originFile);
 				String ext = originFile.substring(originFile.lastIndexOf("."));
 				String changeFile = UUID.randomUUID().toString() + ext;
 
@@ -110,24 +113,21 @@ public class PhotoController {
 				fileNameList.add(multiFileList.get(i));
 			}
 		}
-		System.out.println(fileNameList);
-		System.out.println(fileList);
 
 		// 파일업로드
 		try {
 			for (int i = 0; i < fileNameList.size(); i++) {
 				String changeFile = fileList.get(i).get("changeFile");
 				File uploadFile = new File(root + "\\" + changeFile);
-				System.out.println(uploadFile);
+				//System.out.println(uploadFile);
 				fileNameList.get(i).transferTo(uploadFile);
 				vo.setName(changeFile);
 				vo.setOrder_num(Integer.parseInt(imgAlbumDic.get(fileNameList.get(i).getOriginalFilename())));
-				System.out.println(albumNum);
+				//System.out.println(albumNum);
 				vo.setAlbumId(albumNum);
 				photoService.insertPhoto(vo);
 			}
 			System.out.println("다중 파일 업로드 성공");
-			// 앨범 등록
 
 			return "photoHome";
 		} catch (Exception e) {
@@ -141,27 +141,33 @@ public class PhotoController {
 		return "redirect:index.jsp";
 	}
 
-	// 앨범 표출
+	// 앨범 표출 
 	@RequestMapping(value = "/showPhotos.do", method = RequestMethod.GET)
 	public String insertPhotos(HttpServletRequest request, Model model) throws IOException {
 		String user = getCookie(request, "user");
 		String path = "C:\\Users\\cndwn\\Desktop\\testUploads\\uploadFiles";
-		// String path = ".\\uploadFiles";
-
-		String albumNum = String.valueOf(photoService.getMaxAlbum());
-		List<PhotoVO> resultVO = photoService.getPhoto(albumNum);
-		List<String> fileUrls = new ArrayList();
-		for (PhotoVO photo : resultVO) {
-			//fileUrls.add(path + File.separator + photo.getName()); // 파일의 실제 경로
-			fileUrls.add(photo.getName()); 
-		}
 		
+		// albumNum 가져오는 방법 추후 구현해야할 듯 함.. 현재는 임의로 가장 최근 앨범 불러오도록 설정
+		String albumId = String.valueOf(photoService.getMaxAlbum());
+		List<PhotoVO> resultVO = photoService.getPhoto(albumId);
+		
+		// 페이지당 사진 수 가져와서 dict 형태로 변환
+		String[] pagePerImageList = photoService.getPagePerImage(albumId).split("");
+		Map<Integer, Integer> pagePerImageMap = new HashMap<Integer, Integer>();
+		for(int i=0; i<pagePerImageList.length; i+=2) {
+			pagePerImageMap.put(Integer.parseInt(pagePerImageList[i]), 
+								Integer.parseInt(pagePerImageList[i+1]));
+		}
+		String pagePerImageJson = new ObjectMapper().writeValueAsString(pagePerImageMap);
+		
+		model.addAttribute("pagePerImage", pagePerImageJson);
 		model.addAttribute("photosInfo", resultVO);
-		model.addAttribute("fileUrls", fileUrls);
 		return ("showPhotos");
 	}
 	
-	@RequestMapping(value = "/image-manual-response", method = RequestMethod.GET)
+	
+	// https://jh-yoon.tistory.com/22 참고.. 눈물난다
+	@RequestMapping(value = "/imageResponse", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getImageAsResponseEntity(@RequestParam("fileName") String fileName) throws IOException {
 		HttpHeaders headers = new HttpHeaders();
 		String path = "C:\\Users\\cndwn\\Desktop\\testUploads\\uploadFiles";

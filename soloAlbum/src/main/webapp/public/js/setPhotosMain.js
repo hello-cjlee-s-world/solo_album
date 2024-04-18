@@ -2,6 +2,7 @@ const formData = new FormData(document.getElementById('insertPhotosForm'));
 const imgBox = document.querySelector('#imgBox');
 const deletedPhoto = new Blob();
 let imgSwitch=0;
+let page = 1;
 let fileList=[];
 let num = 0;
 let imgAlbumDic = {};
@@ -189,6 +190,19 @@ const handleClick = () => {
 
 // 데이터 서버로 보내기
 document.getElementById('submitButton').addEventListener('click', () => {
+	// 페이지당 이미지 갯수 세기
+	const pagePerImage = {};
+	for(let i=1; i < page+1; i++) {
+		pagePerImage[i] = 0;
+		const boxsInPage = document.querySelectorAll(`.page${i}`);
+		for(let j=0; j<boxsInPage.length; j++) {
+			//console.log(j)
+			//console.log(boxsInPage[j].childElementCount)
+			if(boxsInPage[j].childElementCount > 0) {
+				pagePerImage[i] = pagePerImage[i]+1;		
+			}
+		}
+	}
 	if(imgBox.childElementCount <= 1){
 		formData.delete('uploadFile');
 		// 파일 formData에 추가
@@ -197,6 +211,8 @@ document.getElementById('submitButton').addEventListener('click', () => {
 		});
 		// 이미지:앨범 구역 맵핑 정보 Object에서 JSON으로 변환 후 추가
 		formData.append('imgAlbumDic', JSON.stringify(imgAlbumDic));
+		// 페이지:이미지개수 맵핑 정보 Object에서 JSON으로 변환 후 추가
+		formData.append('pagePerImage', JSON.stringify(pagePerImage));
 		fetch('insertPhotos.do', {
 			method: 'POST',
 			cache: 'no-cache',
@@ -215,6 +231,10 @@ document.getElementById('submitButton').addEventListener('click', () => {
 	} else {
 		alert('사진을 전부 등록하거나 삭제해주세요.');
 	}
+	// 
+	
+	console.log(pagePerImage);
+	
 });
 
 

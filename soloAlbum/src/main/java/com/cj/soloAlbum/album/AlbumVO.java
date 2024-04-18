@@ -4,6 +4,7 @@ public class AlbumVO {
 	String id;
 	String userid;
 	int create_time;
+	String pagePerImage;
 	public String getId() {
 		return id;
 	}
@@ -21,6 +22,12 @@ public class AlbumVO {
 	}
 	public void setCreate_time(int create_time) {
 		this.create_time = create_time;
+	}
+	public String getPagePerImage() {
+		return pagePerImage;
+	}
+	public void setPagePerImage(String pagePerImage) {
+		this.pagePerImage = pagePerImage;
 	}
 	
 	

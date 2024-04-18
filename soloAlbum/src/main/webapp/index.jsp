@@ -12,7 +12,7 @@
 <form action="login.do" method="post">
 	<div id="loginBOx">
 		<label for="id">아이디</label>
-		<input type="text" name="id" id="id">
+		<input type="text" name="id" id="id" autofocus="autofocus">
 		<br>
 		<label for="pwd">비밀번호</label>
 		<input type="password" name="pwd" id="pwd">

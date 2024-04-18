@@ -36,6 +36,10 @@ public class PhotoServiceImpl implements PhotoService {
 	public int getMaxAlbum() {
 		return photoDAO.getMaxAlbum();
 	}
+	@Override
+	public String getPagePerImage(String albumid) {
+		return photoDAO.getPagePerImage(albumid);
+	}
 	// DBtest
 //	@Override
 //	public void testInsert() {

@@ -5,7 +5,6 @@ const buttonNext = document.getElementById('buttonNext');
 const buttonPrevious = document.querySelector('#buttonPrevious');
 const currentPageNum = document.querySelector('#currentPageNum');
 const totalPageNum = document.querySelector('#totalPageNum');
-let page = 1;
 let albumnum = 4;
 let currentPage = 1;
 
@@ -52,12 +51,14 @@ buttonNext.addEventListener('click', () => {
 				const albumBoxPrevious = document.querySelector(`#albumBox${i+1}`);
 				albumBoxPrevious.removeAttribute('id');
 				albumBoxPrevious.classList.add('restBox');
-				albumBoxPrevious.classList.add(`page${currentPage}`);
+			// 페이지 생성 시 page(숫자) class에 추가되도록 수정하여 아래 코드는 폐기
+			//	albumBoxPrevious.classList.add(`page${currentPage}`);
 				albumBoxPrevious.classList.remove('albumBox');
 				restBoxs.appendChild(albumBoxPrevious);
 			// 새 앨범구역 생성 후 id, class, data-albumnum 세팅, mainContainer에 추가
 				const albumBox = document.createElement('div');
 				albumBox.classList.add('albumBox');
+				albumBox.classList.add(`page${page+1}`);
 				albumBox.setAttribute('data-albumnum', albumnum); albumnum++;
 				albumBox.id = `albumBox${i+1}`;
 				if(i < 2){
