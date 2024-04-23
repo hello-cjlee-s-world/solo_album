@@ -11,12 +11,13 @@
 </head>
 <body>
 <%-- <img src="<c:url value='soloAlbum/imageResponse?fileName=${fileUrls[0]}' />" /> --%>
-
-		<!-- 앨범 구역 -->
+<div id="backgroundContainer">
+	<!-- 앨범 구역 -->
 	<div id="mainContainer">
-		<div class="pages left_page"></div>
-		<div class="pages rightPage"></div>
-
+		<div id="pageContainer">
+			<div class="pages leftPage"></div>
+			<div class="pages rightPage"></div>
+		</div>
 		<div id="buttonPageContainer">
 			<div id="buttonBox">
 				<button type="button" id="buttonPrevious" class='restButton'>이전
@@ -29,19 +30,22 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
 	<div id="restBoxs"></div>
+</div>
 </body>
 
 <script type="text/javascript">
+window.onload = () => {
+	const pass = prompt('비밀번호를 입력해주세요.');
+	alert(pass);
+}
 let num = 0;
 const imgAlbumDic = {};
 const pages = document.querySelectorAll('.pages');
 const restBoxs = document.querySelector('#restBoxs');
 // 페이지당 이미지 개수
 const pagePerImage = ${pagePerImage};
-console.log(pagePerImage);
 // jstl 이 js보다 먼저 렌더링 되기 때문에 미리 url 가져오기
 const imgSrc = '<c:url value="/imageResponse?fileName=" />';
 let pageNum = 1;
@@ -52,12 +56,12 @@ let pageNum = 1;
 </c:forEach>
 
 // 앨범이 한페이지에 4장이므로 4의 배수 맞추기 위한 수
-const plusNum = Math.max.apply(null, Object.keys(imgAlbumDic)) % 4;
+const plusNum = Object.keys(imgAlbumDic).length % 4;
 //for(let i=0; i<Object.keys(imgAlbumDic).length; i++){
-for(let i=0; i<(Math.max.apply(null, Object.keys(imgAlbumDic))+plusNum); i++) {
+for(let i=0; i<(Object.keys(imgAlbumDic).length+plusNum); i++) {
 	const albumBox = document.createElement('div');
 	const img = document.createElement('img');
-
+	
 	let boxNum = i % 4;
 	if(boxNum == 0 && i != 0){
 		pageNum++;

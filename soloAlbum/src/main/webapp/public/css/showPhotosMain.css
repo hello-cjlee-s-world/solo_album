@@ -1,4 +1,4 @@
-*{
+* {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
@@ -8,46 +8,75 @@
 html, body {
 	height: 100%;
 }
-#mainContainer {
+#backgroundContainer {
 	width: 100%;
+	height: 100%;
+	
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+#mainContainer {
+	width: 60%;
 	height: 80%;
-/* position: relative 주면 이미지 드래그 이상하게 됨 */
+	position: relative;
+	bottom: 0;
+
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
-	align-itmes: center;
+	align-items: center;
 	flex-wrap: nowrap;
-	
-	bottom: 0;
+	background-color: #ff8040;
+	border: 2px solid black;	
+	border-radius: 1.5%;
 }
-.pages{
+#pageContainer {
+	width: 100%;
+	height: 100%;
+	
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+}
+#buttonPageContainer {
+	position: absolute;
+	left: 3%;
+	top: 3%;
+}
+.pages {
 	width:48%;
 	height:100%;
-	
 	/* position: relative 주면 이미지 드래그 이상하게 됨 */
-	
 	display:flex;
 	flex-direction: column;
 	justify-content: space-around;
-	align-itmes: center;
+	align-items: center;
 	flex-wrap: nowrap;
 }
+.leftPage {
+	border-right: 2px solid black;
+}
+.rightPage {
+	border-left: 2px solid black;	
+}
+
 .pages .albumBox {
-	width: 200px;
-	/* height: 150px; */
-	/* position: relative 주면 이미지 드래그 이상하게 됨 */
-	
-	background-color: beige; 
+	height:30%;
+	padding: 6px;
+	background-color: white; 
+	box-shadow: 0px 0px 2px 0.5px lightgrey;
 }
-
-.pages .albumBox img{
-	width:100%;
+.pages .albumBox img {
+	height:100%;
+	box-shadow: 0px 0px 2px 0.5px lightgrey;
 }
-
-.pages .restBox{
+.pages .restBox {
 	display: none;
 }
-.restButton{
+.restButton {
 	display: none;
 }
 #restBoxs {
