@@ -13,30 +13,44 @@ import com.cj.soloAlbum.photo.PhotoVO;
 public class PhotoDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
-	
+
 	public void insertPhoto(PhotoVO vo) {
 		mybatis.insert("PhotoDAO.insertPhoto", vo);
 	}
+
 	public PhotoVO getAllPhoto(PhotoVO vo) {
 		return (PhotoVO) mybatis.selectOne("getAllPhoto.getPhoto", vo);
 	}
+
 	public List<PhotoVO> getPhoto(String albumId) {
 		return mybatis.selectList("PhotoDAO.getPhoto", albumId);
 	}
-	
+
+// 	Album 관련
 	public void insertAlbum(AlbumVO vo) {
 		mybatis.insert("PhotoDAO.insertAlbum", vo);
 	}
-	public List<AlbumVO> getAllAlbum(){
+
+	public AlbumVO getAlbum(String albumId) {
+		return mybatis.selectOne("PhotoDAO.getAlbum", albumId);
+	}
+
+	public List<AlbumVO> getAllAlbum() {
 		return mybatis.selectList("PhotoDAO.getAllAlbum");
 	}
+
 	public int getMaxAlbum() {
 		return mybatis.selectOne("PhotoDAO.getMaxAlbum");
 	}
-	public String getPagePerImage(String albumid) {
-		return mybatis.selectOne("PhotoDAO.getPagePerImage", albumid);
+
+	public String getAlbumPwd(String albumId) {
+		return mybatis.selectOne("PhotoDAO.getAlbumPwd", albumId);
 	}
-	//DBtest
+
+	public String getPagePerImage(String albumId) {
+		return mybatis.selectOne("PhotoDAO.getPagePerImage", albumId);
+	}
+	// DBtest
 //	public void testInsert() {
 //		System.out.println("DAO 실행");
 //		mybatis.insert("testInsert");

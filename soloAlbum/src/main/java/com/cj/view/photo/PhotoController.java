@@ -59,9 +59,8 @@ public class PhotoController {
 	@SuppressWarnings("null")
 	@RequestMapping(value = "/insertPhotos.do", method = RequestMethod.POST)
 	public String insertPhotos(@RequestParam("uploadFile") List<MultipartFile> multiFileList,
-			HttpServletRequest request) throws IllegalStateException, IOException {
+			HttpServletRequest request, AlbumVO albumVO) throws IllegalStateException, IOException {
 		PhotoVO vo = new PhotoVO();
-		AlbumVO albumVO = new AlbumVO();
 		
 		@SuppressWarnings("unchecked")
 		// js에서 dict 형태로 들어온 데이터 json으로 변환하기 위한 클래스
@@ -86,6 +85,7 @@ public class PhotoController {
 		albumVO.setId(albumNum);
 		albumVO.setUserid(getCookie(request, "userType"));
 		albumVO.setPagePerImage(pagePerImageString);
+		System.out.println(albumVO.toString());
 		photoService.insertAlbum(albumVO);
 		
 		// 사진 파일 등록할 경로 설정
@@ -145,24 +145,30 @@ public class PhotoController {
 	@RequestMapping(value = "/showPhotos.do", method = RequestMethod.GET)
 	public String insertPhotos(HttpServletRequest request, Model model) throws IOException {
 		String user = getCookie(request, "user");
-		String path = "C:\\Users\\cndwn\\Desktop\\testUploads\\uploadFiles";
+		//String path = "C:\\Users\\cndwn\\Desktop\\testUploads\\uploadFiles";
 		
 		// albumNum 가져오는 방법 추후 구현해야할 듯 함.. 현재는 임의로 가장 최근 앨범 불러오도록 설정
 		String albumId = String.valueOf(photoService.getMaxAlbum());
-		List<PhotoVO> resultVO = photoService.getPhoto(albumId);
-		
-		// 페이지당 사진 수 가져와서 dict 형태로 변환
-		String[] pagePerImageList = photoService.getPagePerImage(albumId).split("");
-		Map<Integer, Integer> pagePerImageMap = new HashMap<Integer, Integer>();
-		for(int i=0; i<pagePerImageList.length; i+=2) {
-			pagePerImageMap.put(Integer.parseInt(pagePerImageList[i]), 
-								Integer.parseInt(pagePerImageList[i+1]));
+		// 만약 album pwd가 필요하다면 albumid만 보낸다.
+		if(photoService.getAlbum(albumId).getPwdRequired().equals("y")) {
+			model.addAttribute("albumId", albumId);
+			return ("showPhotos");
+		} else {
+			List<PhotoVO> resultVO = photoService.getPhoto(albumId);
+			
+			// 페이지당 사진 수 가져와서 dict 형태로 변환
+			String[] pagePerImageList = photoService.getPagePerImage(albumId).split("");
+			Map<Integer, Integer> pagePerImageMap = new HashMap<Integer, Integer>();
+			for(int i=0; i<pagePerImageList.length; i+=2) {
+				pagePerImageMap.put(Integer.parseInt(pagePerImageList[i]), 
+									Integer.parseInt(pagePerImageList[i+1]));
+			}
+			String pagePerImageJson = new ObjectMapper().writeValueAsString(pagePerImageMap);
+			
+			model.addAttribute("pagePerImage", pagePerImageJson);
+			model.addAttribute("photosInfo", resultVO);
+			return ("showPhotos");
 		}
-		String pagePerImageJson = new ObjectMapper().writeValueAsString(pagePerImageMap);
-		
-		model.addAttribute("pagePerImage", pagePerImageJson);
-		model.addAttribute("photosInfo", resultVO);
-		return ("showPhotos");
 	}
 	
 	

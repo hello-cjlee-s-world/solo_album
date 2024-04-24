@@ -24,9 +24,13 @@ public class PhotoServiceImpl implements PhotoService {
 	public List<PhotoVO> getPhoto(String albumId) {
 		return photoDAO.getPhoto(albumId);
 	}
-	
+//	Album 관련
 	public void insertAlbum(AlbumVO vo) {
 		photoDAO.insertAlbum(vo);
+	}
+@Override
+	public AlbumVO getAlbum(String albumId) {
+		return photoDAO.getAlbum(albumId);
 	}
 	@Override
 	public List<AlbumVO> getAllAlbum() {
@@ -37,8 +41,12 @@ public class PhotoServiceImpl implements PhotoService {
 		return photoDAO.getMaxAlbum();
 	}
 	@Override
-	public String getPagePerImage(String albumid) {
-		return photoDAO.getPagePerImage(albumid);
+	public String getAlbumPwd(String albumId) {
+		return photoDAO.getAlbumPwd(albumId);
+	}
+	@Override
+	public String getPagePerImage(String albumId) {
+		return photoDAO.getPagePerImage(albumId);
 	}
 	// DBtest
 //	@Override

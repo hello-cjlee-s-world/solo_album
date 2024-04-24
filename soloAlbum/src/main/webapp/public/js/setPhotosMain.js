@@ -7,6 +7,8 @@ let fileList=[];
 let num = 0;
 let imgAlbumDic = {};
 
+formData.delete('pwdRequired'); formData.delete('pwd');
+
 const files = document.querySelector("#files");
 // input의 onchange에서 this를 인자로 넣었기 때문에 input은 files.addEventListener("change" (e))의 e.target 과 같다
 // 이미지 프리뷰 설정
@@ -213,6 +215,11 @@ document.getElementById('submitButton').addEventListener('click', () => {
 		formData.append('imgAlbumDic', JSON.stringify(imgAlbumDic));
 		// 페이지:이미지개수 맵핑 정보 Object에서 JSON으로 변환 후 추가
 		formData.append('pagePerImage', JSON.stringify(pagePerImage));
+		formData.append('pwdRequired', document.querySelector('input[name="pwdRequired"]:checked').value);
+		formData.append('pwd', document.querySelector('#pwd').value);
+		for (let key of formData.keys()) {
+			console.log(key, ":", formData.get(key));
+		}
 		fetch('insertPhotos.do', {
 			method: 'POST',
 			cache: 'no-cache',

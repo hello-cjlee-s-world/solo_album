@@ -32,25 +32,40 @@
 
 		<!-- 앨범 구역 -->
 		<div id="mainContainer">
-			<div class="pages left_page">
-				<div id="albumBox1" class="albumBox page1" data-albumnum="0"></div>
-				<div id="albumBox2" class="albumBox page1" data-albumnum="1"></div>
+			<div id="pageContainer">
+				<div class="pages left_page">
+					<div id="albumBox1" class="albumBox page1" data-albumnum="0"></div>
+					<div id="albumBox2" class="albumBox page1" data-albumnum="1"></div>
+				</div>
+				<div class="pages rightPage">
+					<div id="albumBox3" class="albumBox page1" data-albumnum="2"></div>
+					<div id="albumBox4" class="albumBox page1" data-albumnum="3"></div>
+				</div>
 			</div>
-			<div class="pages rightPage">
-				<div id="albumBox3" class="albumBox page1" data-albumnum="2"></div>
-				<div id="albumBox4" class="albumBox page1" data-albumnum="3"></div>
-			</div>
-
 			<div id="buttonPageContainer">
 				<div id="buttonBox">
-					<button type="button" id="buttonPrevious" class='restButton'>이전
-						장</button>
-					<button type="button" id="buttonNext">다음 장(추가)</button>
+					<button type="button" id="buttonPrevious" class='restButton'>이전 페이지</button>
+					<button type="button" id="buttonNext">다음 페이지</button>
+						
 				</div>
 				<div id="pageBox">
 					<div>
 						<span id="currentPageNum">1</span>/<span id="totalPageNum">1</span>
 					</div>
+				</div>
+				<div id="pwdBox">
+					<span>앨범 비밀번호</span>
+					<div id="radioBox">
+						<div>
+							<label for="pwdRequired">사용안함</label>
+							<input type="radio" value="n"  name="pwdRequired" checked="checked">
+						</div>
+						<div>
+							<label for="pwdRequired">사용함</label>
+							<input type="radio" value="y"  name="pwdRequired">
+						</div>
+					</div>
+					<input type="password" name="pwd" id="pwd" placeholder="비밀번호를 입력해 주세요." >
 				</div>
 			</div>
 

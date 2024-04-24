@@ -5,6 +5,8 @@ public class AlbumVO {
 	String userid;
 	int create_time;
 	String pagePerImage;
+	String pwdRequired;
+	String pwd;
 	public String getId() {
 		return id;
 	}
@@ -29,6 +31,25 @@ public class AlbumVO {
 	public void setPagePerImage(String pagePerImage) {
 		this.pagePerImage = pagePerImage;
 	}
-	
-	
+	public String getPwdRequired() {
+		return pwdRequired;
+	}
+	public void setPwdRequired(String pwdRequired) {
+		this.pwdRequired = pwdRequired;
+	}
+	public String getPwd() {
+		return pwd;
+	}
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
+	@Override
+	public String toString() {
+		return "AlbumVO [id=" + id 
+				+ ", userid=" + userid 
+				+ ", create_time=" + create_time 
+				+ ", pagePerImage=" + pagePerImage 
+				+ ", pwdRequired=" + pwdRequired 
+				+ ", pwd="+pwd+ "]";
+	}
 }

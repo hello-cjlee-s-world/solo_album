@@ -97,11 +97,21 @@ html, body, form {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
-	align-itmes: center;
+	align-items: flex-start;
 	flex-wrap: nowrap;
 	
-	bottom: 0;
+/* 	bottom: 0; */
 }
+#mainContainer #pageContainer{
+	width: 80%;
+	height: 100%;
+	
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	flex-wrap: nowrap;
+} 
 .pages{
 	width:48%;
 	height:100%;
@@ -111,7 +121,7 @@ html, body, form {
 	display:flex;
 	flex-direction: column;
 	justify-content: space-around;
-	align-itmes: center;
+	align-items: center;
 	flex-wrap: nowrap;
 }
 .pages .albumBox {
@@ -122,9 +132,106 @@ html, body, form {
 	background-color: beige; 
 }
 
+#mainContainer #buttonPageContainer {
+	width: 20%;
+	height: 50%;
+	
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	flex-wrap: nowrap;
+} 
+
+#mainContainer #buttonPageContainer #buttonBox {
+	width: 60%;
+	height: 33%;
+	margin-bottom:10px;
+	
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	flex-wrap: nowrap;
+}
+#mainContainer #buttonPageContainer #buttonBox button {
+	width: 80%;
+	height: 48%;
+	transition: 0.1s;
+	background-color: white;
+	border-radius: 5%;
+	box-shadow: 0px 0px 2px green;
+	transition: 0.3s;
+}
+#mainContainer #buttonPageContainer #buttonBox button:hover {
+	transform: scale(1.02);
+	box-shadow: 0px 0px 3px green;
+	cursor: pointer;
+}
+#mainContainer #buttonPageContainer #pageBox {
+	height: 20%;
+	margin-bottom:10px;
+	
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	flex-wrap: nowrap;
+	
+	color: green;
+}
+#mainContainer #buttonPageContainer #pwdBox {
+	width: 100%;
+	height: 45%;
+	padding: 2%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	flex-wrap: nowrap;
+	
+	border: 2px solid green;
+}
+#mainContainer #buttonPageContainer #pwdBox span {
+	font-size: 15px;
+	font-weight: 900;
+	color: green;
+}
+#mainContainer #buttonPageContainer #pwdBox #radioBox {
+	width:100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	flex-wrap: nowrap;
+}
+#mainContainer #buttonPageContainer #pwdBox #radioBox label {
+	color: green;
+}
+#mainContainer #buttonPageContainer #pwdBox #radioBox div {
+	width: 45%;	
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: nowrap;
+}
+#mainContainer #buttonPageContainer #pwdBox #radioBox div input:first-child{
+	margin-right: 20px;
+	font-size: 15px;
+	font-weight: 900;
+}
+#mainContainer #buttonPageContainer #pwdBox #pwd {
+	width: 85%;
+	font-size: 10px;
+	padding: 1%;
+	color: green;
+	text-align: center;
+	border: 0.5px solid #7CCE76;
+}
 .pages .restBox{
 	display: none;
 }
 .restButton{
-	display: none;
+	opacity: 0;
 }
