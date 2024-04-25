@@ -17,6 +17,15 @@ html, body {
 	justify-content: center;
 	align-items: center;
 }
+#pwdContainer {
+	position: absolute;
+	z-index: 1400;
+}
+#pwdContainer #pwdButton {
+}
+#pwdContainer #pwdButton:hover {
+	cursor: pointer;
+} 
 #mainContainer {
 	width: 60%;
 	height: 80%;
@@ -31,6 +40,8 @@ html, body {
 	background-color: #ff8040;
 	border: 2px solid black;	
 	border-radius: 1.5%;
+	
+	opacity: 0;
 }
 #pageContainer {
 	width: 100%;

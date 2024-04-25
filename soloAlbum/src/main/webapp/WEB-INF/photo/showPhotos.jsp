@@ -12,6 +12,12 @@
 <body>
 <%-- <img src="<c:url value='soloAlbum/imageResponse?fileName=${fileUrls[0]}' />" /> --%>
 <div id="backgroundContainer">
+	<!-- pwd 검증 -->
+	<div id="pwdContainer">
+		<span>비밀번호를 입력해주세요.</span>
+		<input type="password" name="password" id="password">
+		<div id="pwdButton"><span>확인</span></div>
+	</div>
 	<!-- 앨범 구역 -->
 	<div id="mainContainer">
 		<div id="pageContainer">
@@ -36,61 +42,100 @@
 </body>
 
 <script type="text/javascript">
-window.onload = () => {
-	const pass = prompt('비밀번호를 입력해주세요.');
-	alert(pass);
-}
-let num = 0;
-const imgAlbumDic = {};
-const pages = document.querySelectorAll('.pages');
-const restBoxs = document.querySelector('#restBoxs');
-// 페이지당 이미지 개수
-const pagePerImage = ${pagePerImage};
-// jstl 이 js보다 먼저 렌더링 되기 때문에 미리 url 가져오기
-const imgSrc = '<c:url value="/imageResponse?fileName=" />';
 let pageNum = 1;
+const pwdButton = document.querySelector('#pwdButton');
+if('${pwdRequired}' === 'y') {
+	pwdButton.addEventListener('click', () => {
+		const albumId =	${albumId};
+		const data = {
+			albumId : ${albumId},
+			pwd : document.querySelector('#password').value
+		}	
+		console.log(data);
+		fetch('/pwdCheck', {
+			method: 'POST',
+			cache: 'no-cache',
+			body: data
+		})
+		.then((response) => {
+			if (response.ok){
+				document.querySelector('#password').value = '';
+				//return response.json(); // JSON 형식으로 변환된 응답을 반환
+				console.log(response.json());				
+			} else {
+				//alert('비밀번호가 다릅니다.')
+			}
+		})
+		.catch((err) => {
+				console.error(err);
+		});
+	});
 
-// photosInfo에서 사진 순서(order_num)과 사진 이름(name) 매치 시키기 
-<c:forEach items="${photosInfo}" var="info">
-	imgAlbumDic[Number(${info.order_num})] = "${info.name}";
-</c:forEach>
+} else {
+	document.querySelector('#pwdContainer').style.opacity = '0';
+	document.querySelector('#mainContainer').style.opacity = '1';
 
-// 앨범이 한페이지에 4장이므로 4의 배수 맞추기 위한 수
-const plusNum = Object.keys(imgAlbumDic).length % 4;
-//for(let i=0; i<Object.keys(imgAlbumDic).length; i++){
-for(let i=0; i<(Object.keys(imgAlbumDic).length+plusNum); i++) {
-	const albumBox = document.createElement('div');
-	const img = document.createElement('img');
-	
-	let boxNum = i % 4;
-	if(boxNum == 0 && i != 0){
-		pageNum++;
-	}
-	
-	// 4번째 사진까지는 화면에 표출, 나머지 사진은 restboxs구역에서 대기
-	if(i < 4){
-		albumBox.setAttribute('id', 'albumBox'+(boxNum+1));
-		albumBox.classList.add('albumBox');
-		albumBox.classList.add('page' + String(pageNum));
-		if(Object.keys(imgAlbumDic).includes(String(i))) 
-			img.src=imgSrc + imgAlbumDic[i];
-		else img.src='./public/img/deletedPhoto.png';
-		albumBox.appendChild(img);
-		if(boxNum < 2){
-			pages[0].appendChild(albumBox);
-		} else {
-			pages[1].appendChild(albumBox);
+	let num = 0;
+	const imgAlbumDic = {};
+	const pages = document.querySelectorAll('.pages');
+	const restBoxs = document.querySelector('#restBoxs');
+	// 페이지당 이미지 개수
+	<c:if test="${not empty pagePerImage}">
+		const pagePerImage = ${pagePerImage};
+	</c:if>
+	<c:if test="${empty pagePerImage}">
+		const pagePerImage = 0;
+	</c:if>
+	// jstl 이 js보다 먼저 렌더링 되기 때문에 미리 url 가져오기
+	const imgSrc = '<c:url value="/imageResponse?fileName=" />';
+	let pageNum = 1;
+
+	// photosInfo에서 사진 순서(order_num)과 사진 이름(name) 매치 시키기 
+	<c:forEach items="${photosInfo}" var="info">
+		imgAlbumDic[Number(${info.order_num})] = "${info.name}";
+	</c:forEach>
+
+	// 앨범이 한페이지에 4장이므로 4의 배수 맞추기 위한 수
+	const plusNum = Object.keys(imgAlbumDic).length % 4;
+	//for(let i=0; i<Object.keys(imgAlbumDic).length; i++){
+	for(let i=0; i<(Object.keys(imgAlbumDic).length+plusNum); i++) {
+		const albumBox = document.createElement('div');
+		const img = document.createElement('img');
+		
+		let boxNum = i % 4;
+		if(boxNum == 0 && i != 0){
+			pageNum++;
 		}
-	} else {
-		albumBox.classList.add('restBox');
-		albumBox.classList.add('page' + String(pageNum));
-		if(Object.keys(imgAlbumDic).includes(String(i))) 
-			img.src=imgSrc + imgAlbumDic[i];
-		else img.src='./public/img/deletedPhoto.png';
-		albumBox.appendChild(img);
-		restBoxs.appendChild(albumBox);
+		
+		// 4번째 사진까지는 화면에 표출, 나머지 사진은 restboxs구역에서 대기
+		if(i < 4){
+			albumBox.setAttribute('id', 'albumBox'+(boxNum+1));
+			albumBox.classList.add('albumBox');
+			albumBox.classList.add('page' + String(pageNum));
+			if(Object.keys(imgAlbumDic).includes(String(i))) 
+				img.src=imgSrc + imgAlbumDic[i];
+			else img.src='./public/img/deletedPhoto.png';
+			albumBox.appendChild(img);
+			if(boxNum < 2){
+				pages[0].appendChild(albumBox);
+			} else {
+				pages[1].appendChild(albumBox);
+			}
+		} else {
+			albumBox.classList.add('restBox');
+			albumBox.classList.add('page' + String(pageNum));
+			if(Object.keys(imgAlbumDic).includes(String(i))) 
+				img.src=imgSrc + imgAlbumDic[i];
+			else img.src='./public/img/deletedPhoto.png';
+			albumBox.appendChild(img);
+			restBoxs.appendChild(albumBox);
+		}
 	}
 }
+
+
+
+
 	
 </script>
 <!-- page의 갯수가 onload될때 정해지기 때문에 이 script 아래로 와야한다. -->

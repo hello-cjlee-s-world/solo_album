@@ -5,7 +5,7 @@ public class AlbumVO {
 	String userid;
 	int create_time;
 	String pagePerImage;
-	String pwdRequired;
+	char pwdRequired;
 	String pwd;
 	public String getId() {
 		return id;
@@ -31,10 +31,10 @@ public class AlbumVO {
 	public void setPagePerImage(String pagePerImage) {
 		this.pagePerImage = pagePerImage;
 	}
-	public String getPwdRequired() {
+	public char getPwdRequired() {
 		return pwdRequired;
 	}
-	public void setPwdRequired(String pwdRequired) {
+	public void setPwdRequired(char pwdRequired) {
 		this.pwdRequired = pwdRequired;
 	}
 	public String getPwd() {

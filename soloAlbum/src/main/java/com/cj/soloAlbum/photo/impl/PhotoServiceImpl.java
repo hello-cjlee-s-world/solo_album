@@ -41,7 +41,7 @@ public class PhotoServiceImpl implements PhotoService {
 		return photoDAO.getMaxAlbum();
 	}
 	@Override
-	public String getAlbumPwd(String albumId) {
+	public AlbumVO getAlbumPwd(String albumId) {
 		return photoDAO.getAlbumPwd(albumId);
 	}
 	@Override

@@ -43,7 +43,7 @@ public class PhotoDAO {
 		return mybatis.selectOne("PhotoDAO.getMaxAlbum");
 	}
 
-	public String getAlbumPwd(String albumId) {
+	public AlbumVO getAlbumPwd(String albumId) {
 		return mybatis.selectOne("PhotoDAO.getAlbumPwd", albumId);
 	}
 

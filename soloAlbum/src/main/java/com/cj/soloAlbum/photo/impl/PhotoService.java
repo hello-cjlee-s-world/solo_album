@@ -14,7 +14,7 @@ public interface PhotoService {
 	AlbumVO getAlbum(String albumid);
 	List<AlbumVO> getAllAlbum();
 	int getMaxAlbum();
-	String getAlbumPwd(String albumId);
+	AlbumVO getAlbumPwd(String albumId);
 	String getPagePerImage(String albumId);
 	//DBtest
 	//void testInsert();
