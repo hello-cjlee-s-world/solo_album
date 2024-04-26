@@ -7,6 +7,7 @@ public class AlbumVO {
 	String pagePerImage;
 	char pwdRequired;
 	String pwd;
+	String albumName;
 	public String getId() {
 		return id;
 	}
@@ -43,6 +44,12 @@ public class AlbumVO {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
+	public String getAlbumName() {
+		return albumName;
+	}
+	public void setAlbumName(String albumName) {
+		this.albumName = albumName;
+	}
 	@Override
 	public String toString() {
 		return "AlbumVO [id=" + id 
@@ -50,6 +57,7 @@ public class AlbumVO {
 				+ ", create_time=" + create_time 
 				+ ", pagePerImage=" + pagePerImage 
 				+ ", pwdRequired=" + pwdRequired 
-				+ ", pwd="+pwd+ "]";
+				+ ", pwd=" + pwd 
+				+ ", albumName="+ albumName + "]";
 	}
 }

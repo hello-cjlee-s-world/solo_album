@@ -37,6 +37,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -172,6 +173,7 @@ public class PhotoController {
 			model.addAttribute("pwdRequired", pwdRequired);
 			model.addAttribute("pagePerImage", pagePerImageJson);
 			model.addAttribute("photosInfo", resultVO);
+			System.out.println(resultVO.toString());
 			return ("showPhotos");
 		}
 	}
@@ -191,11 +193,13 @@ public class PhotoController {
 	
 	// 앨범 pwd 체크 후 데이터 보내기
 	@RequestMapping(value = "/pwdCheck", method = RequestMethod.POST)
+	@ResponseBody // json 형식으로 데이터 반환하기 위해 붙임
 	public String pwdCheck(@RequestParam("albumId") String albumId, 
 			@RequestParam("pwd") String pwd) throws JsonProcessingException {
 		System.out.println(pwd);
 		System.out.println(albumId);
-		if(photoService.getAlbumPwd(albumId).getPwd().equals(pwd)) {
+		Map<String, Object> resultMap = new HashMap();
+		if(photoService.getAlbum(albumId).getPwd().equals(pwd)) {
 			// 페이지당 사진 수 가져와서 dict 형태로 변환
 			List<PhotoVO> resultVO = photoService.getPhoto(albumId);
 			String[] pagePerImageList = photoService.getPagePerImage(albumId).split("");
@@ -204,14 +208,16 @@ public class PhotoController {
 				pagePerImageMap.put(Integer.parseInt(pagePerImageList[i]), 
 									Integer.parseInt(pagePerImageList[i+1]));
 			}
-			Map<String, Object> resultMap = new HashMap();
             resultMap.put("vo1", resultVO);
             resultMap.put("vo2", pagePerImageMap);
 			String Json = new ObjectMapper().writeValueAsString(resultMap);
-			System.out.println(Json);
+			System.out.println("Json : "+Json);
 			return Json;
-		} else {			
-			return "비밀번호가 일치하지 않습니다.";
+		} else {	
+            resultMap.put("message", "password not correct.");
+			String Json = new ObjectMapper().writeValueAsString(resultMap);
+			System.out.println("Json : "+Json);
+			return Json;
 		}
 	}
 	

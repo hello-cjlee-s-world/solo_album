@@ -1,13 +1,3 @@
-const mainContainer = document.querySelector('#mainContainer');
-const buttonNext = document.getElementById('buttonNext');
-const buttonPrevious = document.querySelector('#buttonPrevious');
-const currentPageNum = document.querySelector('#currentPageNum');
-const totalPageNum = document.querySelector('#totalPageNum');
-let albumnum = 4;
-let currentPage = 1;
-const totalPage = pageNum;
-totalPageNum.innerText = totalPage;
-
 // 다음 버튼을 누르면
 buttonNext.addEventListener('click', () => {
 	if(currentPage < totalPage){

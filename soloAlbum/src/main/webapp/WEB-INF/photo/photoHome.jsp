@@ -22,11 +22,6 @@
 						multiple onchange="fileChange(this)">
 				</div>
 			</div>
-			<div>
-				<div align="center">
-					<button type="button" id="submitButton">보내기</button>
-				</div>
-			</div>
 		</div>
 
 
@@ -42,7 +37,7 @@
 					<div id="albumBox4" class="albumBox page1" data-albumnum="3"></div>
 				</div>
 			</div>
-			<div id="buttonPageContainer">
+			<div id="informationContainer">
 				<div id="buttonBox">
 					<button type="button" id="buttonPrevious" class='restButton'>이전 페이지</button>
 					<button type="button" id="buttonNext">다음 페이지</button>
@@ -66,6 +61,11 @@
 						</div>
 					</div>
 					<input type="password" name="pwd" id="pwd" placeholder="비밀번호를 입력해 주세요." >
+				</div>
+				<div id="nameBox">
+					<span>앨범 제목</span>
+					<input type="text" name="albumName" id="albumName" placeholder="제목을 입력해 주세요." >
+					<button type="button" id="submitButton">보내기</button>
 				</div>
 			</div>
 

@@ -40,10 +40,11 @@ public class PhotoServiceImpl implements PhotoService {
 	public int getMaxAlbum() {
 		return photoDAO.getMaxAlbum();
 	}
-	@Override
-	public AlbumVO getAlbumPwd(String albumId) {
-		return photoDAO.getAlbumPwd(albumId);
-	}
+
+	/*
+	 * @Override public String getAlbumPwd(String albumId) { return
+	 * photoDAO.getAlbumPwd(albumId); }
+	 */
 	@Override
 	public String getPagePerImage(String albumId) {
 		return photoDAO.getPagePerImage(albumId);

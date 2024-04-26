@@ -42,29 +42,70 @@
 </body>
 
 <script type="text/javascript">
-let pageNum = 1;
+
+// jstl 이 js보다 먼저 렌더링 되기 때문에 미리 url 가져오기
+let num = 0;
+const imgSrc = '<c:url value="/imageResponse?fileName=" />';
 const pwdButton = document.querySelector('#pwdButton');
+const imgAlbumDic = {};
+const pages = document.querySelectorAll('.pages');
+const restBoxs = document.querySelector('#restBoxs');
+// 페이징 관련 변수
+const mainContainer = document.querySelector('#mainContainer');
+const buttonNext = document.getElementById('buttonNext');
+const buttonPrevious = document.querySelector('#buttonPrevious');
+const currentPageNum = document.querySelector('#currentPageNum');
+const totalPageNum = document.querySelector('#totalPageNum');
+let albumnum = 4;
+let currentPage = 1;
+let pageNum = 1;
+let totalPage = 0;
+
+
+// 페이지당 이미지 개수
+<c:if test="${not empty pagePerImage}">
+	const pagePerImage = ${pagePerImage};
+</c:if>
+// photosInfo에서 사진 순서(order_num)과 사진 이름(name) 매치 시키기 
+<c:if test="${not empty photosInfo}">
+	<c:forEach items="${photosInfo}" var="info">
+		imgAlbumDic[${info.order_num}] = "${info.name}";
+	</c:forEach>
+</c:if>
+
 if('${pwdRequired}' === 'y') {
 	pwdButton.addEventListener('click', () => {
+		<c:if test="${not empty albumId}">
 		const albumId =	${albumId};
-		const data = {
-			albumId : ${albumId},
-			pwd : document.querySelector('#password').value
-		}	
-		console.log(data);
-		fetch('/pwdCheck', {
+		</c:if>
+		const data = new URLSearchParams();
+		
+		data.append('albumId' , albumId)
+		data.append('pwd' , document.querySelector('#password').value);
+		
+		fetch('/soloAlbum/pwdCheck', {
 			method: 'POST',
 			cache: 'no-cache',
 			body: data
 		})
 		.then((response) => {
-			if (response.ok){
 				document.querySelector('#password').value = '';
-				//return response.json(); // JSON 형식으로 변환된 응답을 반환
-				console.log(response.json());				
-			} else {
-				//alert('비밀번호가 다릅니다.')
-			}
+				// response 의 body만을 json 파싱해서 준다.
+				response.json().then(data => {
+					document.querySelector('#pwdContainer').style.opacity = '0';
+					document.querySelector('#mainContainer').style.opacity = '1';
+					
+					const photosInfo = data.vo1;
+					const pagePerImage = data.vo2;
+					
+					// photosInfo에서 사진 순서(order_num)과 사진 이름(name) 매치 시키기 
+					photosInfo.forEach(info => {
+						imgAlbumDic[Number(info.order_num)] = info.name;
+					});
+					console.log(photosInfo);
+					
+					makeBoxs(imgAlbumDic);
+				});
 		})
 		.catch((err) => {
 				console.error(err);
@@ -74,30 +115,19 @@ if('${pwdRequired}' === 'y') {
 } else {
 	document.querySelector('#pwdContainer').style.opacity = '0';
 	document.querySelector('#mainContainer').style.opacity = '1';
+	console.log(imgAlbumDic)
+	makeBoxs(imgAlbumDic);
+	
+}
 
-	let num = 0;
-	const imgAlbumDic = {};
-	const pages = document.querySelectorAll('.pages');
-	const restBoxs = document.querySelector('#restBoxs');
-	// 페이지당 이미지 개수
-	<c:if test="${not empty pagePerImage}">
-		const pagePerImage = ${pagePerImage};
-	</c:if>
-	<c:if test="${empty pagePerImage}">
-		const pagePerImage = 0;
-	</c:if>
-	// jstl 이 js보다 먼저 렌더링 되기 때문에 미리 url 가져오기
-	const imgSrc = '<c:url value="/imageResponse?fileName=" />';
-	let pageNum = 1;
 
-	// photosInfo에서 사진 순서(order_num)과 사진 이름(name) 매치 시키기 
-	<c:forEach items="${photosInfo}" var="info">
-		imgAlbumDic[Number(${info.order_num})] = "${info.name}";
-	</c:forEach>
+// 앨범 가져오는 코드   // 순서:파일명 객체
+function makeBoxs (imgAlbumDic){
+	console.log(imgAlbumDic)
 
 	// 앨범이 한페이지에 4장이므로 4의 배수 맞추기 위한 수
 	const plusNum = Object.keys(imgAlbumDic).length % 4;
-	//for(let i=0; i<Object.keys(imgAlbumDic).length; i++){
+	
 	for(let i=0; i<(Object.keys(imgAlbumDic).length+plusNum); i++) {
 		const albumBox = document.createElement('div');
 		const img = document.createElement('img');
@@ -131,8 +161,10 @@ if('${pwdRequired}' === 'y') {
 			restBoxs.appendChild(albumBox);
 		}
 	}
+	// 전체 페이지 표시
+	totalPage = pageNum;
+	totalPageNum.innerText = totalPage;
 }
-
 
 
 

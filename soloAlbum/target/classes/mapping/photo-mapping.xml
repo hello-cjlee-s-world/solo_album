@@ -20,14 +20,14 @@
 	<!-- album 관련 -->
 	<insert id="insertAlbum">
 		<if test="pwdRequired.equalsIgnoreCase('n') or pwdRequired == null">
-			INSERT INTO albums(id, userid, pagePerImage)
+			INSERT INTO albums(id, userid, pagePerImage, albumName)
 			VALUES(#{id},
-			#{userid}, #{pagePerImage})
+			#{userid}, #{pagePerImage}, #{albumName})
 		</if>
 		<if test="pwdRequired.equalsIgnoreCase('y')">
 			INSERT INTO albums(id, userid, pagePerImage, pwdRequired,
-			pwd)
-			VALUES(#{id}, #{userid}, #{pagePerImage}, #{pwdRequired}, #{pwd})
+			pwd, albumName)
+			VALUES(#{id}, #{userid}, #{pagePerImage}, #{pwdRequired}, #{pwd}, #{albumName})
 		</if>
 	</insert>
 	<select id="getMaxAlbum" resultType="Integer">
@@ -44,11 +44,11 @@
 		SELECT pagePerImage FROM
 		albums WHERE id=#{albumId}
 	</select>
-	<select id="getAlbumPwd" resultType="String">
-		SELECT id, pwdrequired, pwd FROM
+	<!-- <select id="getAlbumPwd" resultType="String">
+		SELECT * FROM
 		albums
 		WHERE id=#{albumId}
-	</select>
+	</select> -->
 
 
 

@@ -43,9 +43,9 @@ public class PhotoDAO {
 		return mybatis.selectOne("PhotoDAO.getMaxAlbum");
 	}
 
-	public AlbumVO getAlbumPwd(String albumId) {
-		return mybatis.selectOne("PhotoDAO.getAlbumPwd", albumId);
-	}
+//	public String getAlbumPwd(String albumId) {
+//		return mybatis.selectOne("PhotoDAO.getAlbumPwd", albumId);
+//	}
 
 	public String getPagePerImage(String albumId) {
 		return mybatis.selectOne("PhotoDAO.getPagePerImage", albumId);

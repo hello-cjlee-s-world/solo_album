@@ -217,6 +217,7 @@ document.getElementById('submitButton').addEventListener('click', () => {
 		formData.append('pagePerImage', JSON.stringify(pagePerImage));
 		formData.append('pwdRequired', document.querySelector('input[name="pwdRequired"]:checked').value);
 		formData.append('pwd', document.querySelector('#pwd').value);
+		formData.append('albumName', document.querySelector('#albumName').value);
 		for (let key of formData.keys()) {
 			console.log(key, ":", formData.get(key));
 		}
@@ -229,6 +230,11 @@ document.getElementById('submitButton').addEventListener('click', () => {
 		.then((loc) => {
 			formData.delete('uploadFile');
 			formData.delete('imgAlbumDic');
+			formData.delete('pagePerImage');
+			formData.delete('pwdRequired');
+			formData.delete('pwd');
+			formData.delete('albumName');
+			
 			console.log(loc);
 			//location.href=loc.url;
 		})
