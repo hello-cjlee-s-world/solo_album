@@ -27,7 +27,7 @@ public class UserController {
 			if (vo.getId().equals("admin") && vo.getPwd().equals("1234")) {
 				// cookie 설정
 				setCookie(response, "userType", vo.getId());
-				return "photoHome";
+				return "redirect:albumList.do";
 			} else if(vo.getId().equals("guest") && vo.getPwd().equals("ghkdekgml")){
 				// cookie 설정
 				setCookie(response, "userType", vo.getId());

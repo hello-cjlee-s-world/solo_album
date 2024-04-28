@@ -19,12 +19,12 @@
 
 	<!-- album 관련 -->
 	<insert id="insertAlbum">
-		<if test="pwdRequired.equalsIgnoreCase('n') or pwdRequired == null">
+		<if test="pwdRequired.equals('n') or pwdRequired == null">
 			INSERT INTO albums(id, userid, pagePerImage, albumName)
 			VALUES(#{id},
 			#{userid}, #{pagePerImage}, #{albumName})
 		</if>
-		<if test="pwdRequired.equalsIgnoreCase('y')">
+		<if test="pwdRequired.equals('y')">
 			INSERT INTO albums(id, userid, pagePerImage, pwdRequired,
 			pwd, albumName)
 			VALUES(#{id}, #{userid}, #{pagePerImage}, #{pwdRequired}, #{pwd}, #{albumName})
@@ -39,6 +39,9 @@
 	</select>
 	<select id="getAllAlbum" resultType="album">
 		SELECT * FROM albums
+	    <if test="userid != null and !userid.isEmpty()">
+		WHERE userid=#{userid}
+		</if>
 	</select>
 	<select id="getPagePerImage" resultType="String">
 		SELECT pagePerImage FROM

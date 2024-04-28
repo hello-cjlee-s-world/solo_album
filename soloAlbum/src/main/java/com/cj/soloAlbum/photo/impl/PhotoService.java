@@ -12,7 +12,7 @@ public interface PhotoService {
 //	Album 관련
 	void insertAlbum(AlbumVO vo);
 	AlbumVO getAlbum(String albumid);
-	List<AlbumVO> getAllAlbum();
+	List<AlbumVO> getAllAlbum(AlbumVO vo);
 	int getMaxAlbum();
 //	String getAlbumPwd(String albumId);
 	String getPagePerImage(String albumId);

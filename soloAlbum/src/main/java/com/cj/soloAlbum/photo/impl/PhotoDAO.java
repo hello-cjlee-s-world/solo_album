@@ -35,8 +35,8 @@ public class PhotoDAO {
 		return mybatis.selectOne("PhotoDAO.getAlbum", albumId);
 	}
 
-	public List<AlbumVO> getAllAlbum() {
-		return mybatis.selectList("PhotoDAO.getAllAlbum");
+	public List<AlbumVO> getAllAlbum(AlbumVO vo) {
+		return mybatis.selectList("PhotoDAO.getAllAlbum", vo);
 	}
 
 	public int getMaxAlbum() {

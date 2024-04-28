@@ -198,8 +198,6 @@ document.getElementById('submitButton').addEventListener('click', () => {
 		pagePerImage[i] = 0;
 		const boxsInPage = document.querySelectorAll(`.page${i}`);
 		for(let j=0; j<boxsInPage.length; j++) {
-			//console.log(j)
-			//console.log(boxsInPage[j].childElementCount)
 			if(boxsInPage[j].childElementCount > 0) {
 				pagePerImage[i] = pagePerImage[i]+1;		
 			}
@@ -218,9 +216,7 @@ document.getElementById('submitButton').addEventListener('click', () => {
 		formData.append('pwdRequired', document.querySelector('input[name="pwdRequired"]:checked').value);
 		formData.append('pwd', document.querySelector('#pwd').value);
 		formData.append('albumName', document.querySelector('#albumName').value);
-		for (let key of formData.keys()) {
-			console.log(key, ":", formData.get(key));
-		}
+
 		fetch('insertPhotos.do', {
 			method: 'POST',
 			cache: 'no-cache',
@@ -244,9 +240,7 @@ document.getElementById('submitButton').addEventListener('click', () => {
 	} else {
 		alert('사진을 전부 등록하거나 삭제해주세요.');
 	}
-	// 
 	
-	console.log(pagePerImage);
 	
 });
 

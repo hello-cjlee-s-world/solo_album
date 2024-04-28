@@ -28,13 +28,13 @@ public class PhotoServiceImpl implements PhotoService {
 	public void insertAlbum(AlbumVO vo) {
 		photoDAO.insertAlbum(vo);
 	}
-@Override
+	@Override
 	public AlbumVO getAlbum(String albumId) {
 		return photoDAO.getAlbum(albumId);
 	}
 	@Override
-	public List<AlbumVO> getAllAlbum() {
-		return photoDAO.getAllAlbum();
+	public List<AlbumVO> getAllAlbum(AlbumVO vo) {
+		return photoDAO.getAllAlbum(vo);
 	}
 	@Override
 	public int getMaxAlbum() {

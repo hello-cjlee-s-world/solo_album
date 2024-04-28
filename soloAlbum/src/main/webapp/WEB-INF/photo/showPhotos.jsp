@@ -69,7 +69,7 @@ let totalPage = 0;
 // photosInfo에서 사진 순서(order_num)과 사진 이름(name) 매치 시키기 
 <c:if test="${not empty photosInfo}">
 	<c:forEach items="${photosInfo}" var="info">
-		imgAlbumDic[${info.order_num}] = "${info.name}";
+		imgAlbumDic[Number(${info.order_num})] = "${info.name}";
 	</c:forEach>
 </c:if>
 
@@ -95,14 +95,15 @@ if('${pwdRequired}' === 'y') {
 					document.querySelector('#pwdContainer').style.opacity = '0';
 					document.querySelector('#mainContainer').style.opacity = '1';
 					
-					const photosInfo = data.vo1;
-					const pagePerImage = data.vo2;
+					const photosInfo = data.photosInfo;
+					const pagePerImage = data.pagePerImageMap;
+					const albumName = data.albumName;
+					document.title = albumName;
 					
 					// photosInfo에서 사진 순서(order_num)과 사진 이름(name) 매치 시키기 
 					photosInfo.forEach(info => {
 						imgAlbumDic[Number(info.order_num)] = info.name;
 					});
-					console.log(photosInfo);
 					
 					makeBoxs(imgAlbumDic);
 				});
@@ -115,20 +116,18 @@ if('${pwdRequired}' === 'y') {
 } else {
 	document.querySelector('#pwdContainer').style.opacity = '0';
 	document.querySelector('#mainContainer').style.opacity = '1';
-	console.log(imgAlbumDic)
 	makeBoxs(imgAlbumDic);
 	
 }
 
 
-// 앨범 가져오는 코드   // 순서:파일명 객체
+// 앨범 가져오는 함수   // 순서:파일명 객체
 function makeBoxs (imgAlbumDic){
-	console.log(imgAlbumDic)
-
 	// 앨범이 한페이지에 4장이므로 4의 배수 맞추기 위한 수
-	const plusNum = Object.keys(imgAlbumDic).length % 4;
+	const maxNum = Math.max(...Object.keys(imgAlbumDic));
+	const plusNum = maxNum % 4;
 	
-	for(let i=0; i<(Object.keys(imgAlbumDic).length+plusNum); i++) {
+	for(let i=0; i<(maxNum+plusNum); i++) {	
 		const albumBox = document.createElement('div');
 		const img = document.createElement('img');
 		

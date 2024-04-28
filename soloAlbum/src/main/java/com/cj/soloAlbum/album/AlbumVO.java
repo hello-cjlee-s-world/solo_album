@@ -1,5 +1,7 @@
 package com.cj.soloAlbum.album;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class AlbumVO {
 	String id;
 	String userid;
@@ -38,6 +40,7 @@ public class AlbumVO {
 	public void setPwdRequired(char pwdRequired) {
 		this.pwdRequired = pwdRequired;
 	}
+	@JsonIgnore
 	public String getPwd() {
 		return pwd;
 	}

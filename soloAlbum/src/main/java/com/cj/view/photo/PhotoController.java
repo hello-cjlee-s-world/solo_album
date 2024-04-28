@@ -81,7 +81,7 @@ public class PhotoController {
 		
 		// 앨범 정보 등록
 		String albumNum = "0";
-		if (photoService.getAllAlbum().size() != 0) {
+		if (photoService.getAllAlbum(albumVO).size() != 0) {
 			albumNum = String.valueOf(photoService.getMaxAlbum() + 1);
 		}
 		albumVO.setId(albumNum);
@@ -143,14 +143,23 @@ public class PhotoController {
 		return "redirect:index.jsp";
 	}
 
+	// 앨범 목록 표출
+	@RequestMapping(value="/albumList.do", method = RequestMethod.GET)
+	public String showAlbumList(HttpServletRequest request, Model model) {
+		AlbumVO vo = new AlbumVO();
+		vo.setUserid(getCookie(request, "userType"));
+		List<AlbumVO> voList = photoService.getAllAlbum(vo);
+		model.addAttribute("voList", voList);
+		return "albumList";
+	}
+	
 	// 앨범 표출 
 	@RequestMapping(value = "/showPhotos.do", method = RequestMethod.GET)
 	public String insertPhotos(HttpServletRequest request, Model model) throws IOException {
 		String user = getCookie(request, "user");
-		//String path = "C:\\Users\\cndwn\\Desktop\\testUploads\\uploadFiles";
-		
-		// albumNum 가져오는 방법 추후 구현해야할 듯 함.. 현재는 임의로 가장 최근 앨범 불러오도록 설정
-		String albumId = String.valueOf(photoService.getMaxAlbum());
+		// patameter로(query String) 넘어오는 albumId
+		String albumId = request.getParameter("albumId");
+		System.out.println(albumId);
 		// 만약 album pwd가 y라면(필요하다면) albumid와 qwdRequired를 보낸다.
 		char pwdRequired = photoService.getAlbum(albumId).getPwdRequired();
 		if(pwdRequired == 'y') {
@@ -199,19 +208,20 @@ public class PhotoController {
 		System.out.println(pwd);
 		System.out.println(albumId);
 		Map<String, Object> resultMap = new HashMap();
-		if(photoService.getAlbum(albumId).getPwd().equals(pwd)) {
+		AlbumVO albumvo = photoService.getAlbum(albumId);
+		if(albumvo.getPwd().equals(pwd)) {
 			// 페이지당 사진 수 가져와서 dict 형태로 변환
 			List<PhotoVO> resultVO = photoService.getPhoto(albumId);
-			String[] pagePerImageList = photoService.getPagePerImage(albumId).split("");
+			String[] pagePerImageList = albumvo.getPagePerImage().split("");
 			Map<Integer, Integer> pagePerImageMap = new HashMap<Integer, Integer>();
 			for(int i=0; i<pagePerImageList.length; i+=2) {
 				pagePerImageMap.put(Integer.parseInt(pagePerImageList[i]), 
 									Integer.parseInt(pagePerImageList[i+1]));
 			}
-            resultMap.put("vo1", resultVO);
-            resultMap.put("vo2", pagePerImageMap);
+            resultMap.put("photosInfo", resultVO);
+            resultMap.put("pagePerImageMap", pagePerImageMap);
+            resultMap.put("albumName", albumvo.getAlbumName());
 			String Json = new ObjectMapper().writeValueAsString(resultMap);
-			System.out.println("Json : "+Json);
 			return Json;
 		} else {	
             resultMap.put("message", "password not correct.");
