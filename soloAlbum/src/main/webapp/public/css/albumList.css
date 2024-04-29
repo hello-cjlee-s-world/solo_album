@@ -6,6 +6,58 @@
 	list-style: none;	
 }
 a {color: black;}
-html, body {
+html, body, main{
 	height: 100%;
+}
+header {height: 0%;}
+header h2 {
+	position: absolute;
+	left: 50%;
+	top: 10%;
+	transform: translate(-50%, -50%);
+	color: green;
+}
+main {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#albumList {
+	width: 50%;
+	box-shadow: 0px 0px 30px 0px lightgrey;
+}
+#listHead {
+	background-color: green;
+	color: white;
+}
+#listHead, .AlbumlistDiv a , .AlbumlistLi, .AlbumlistDiv {
+	display: inline-block;
+	width:100%
+}
+#listHead, .AlbumlistDiv {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	border-bottom: 2px solid green;
+	border-radius: 2%;
+}
+#albumList .AlbumlistDiv:hover {
+	background-color: green;
+	color: white;
+	transition : 0.2s;
+}
+.listHeadName, .AlbumName {
+	display: inline-block;
+	width:60%;
+	text-align: center;
+}
+.listHeadDate, .AlbumDate {
+	display: inline-block;
+	width:20%;
+	text-align: center;
+}
+.listHeadpwd, .AlbumPwd {
+	display: inline-block;
+	width:20%;
+	text-align: center;
 }

@@ -7,12 +7,29 @@
 <meta charset="EUC-KR">
 <title>Album List</title>
 <link rel="stylesheet" href="./public/css/albumList.css">
-<link >
 </head>
 <body>
-<c:forEach items="${voList}" var="vo">
-	<a href="showPhotos.do?albumId=${vo.id}">${vo.albumName}</a>
-	<hr>
-</c:forEach>
+	<header><h2>${voList[0].userid}님의 서랍</h2></header>
+	<main>
+
+		<ul id="albumList">
+			<li id="listHead">
+				<span class="listHeadName">앨범 제목</span>
+				<span class="listHeadDate">생성 날짜</span>
+				<span class="listHeadpwd">비밀 앨범</span>
+			</li>
+		<c:forEach items="${voList}" var="vo">
+			<a href="showPhotos.do?albumId=${vo.id}">
+			<li class="AlbumlistLi">
+				<div class="AlbumlistDiv">
+					<span class="AlbumName">${vo.albumName}</span>
+					<span class="AlbumDate">${vo.create_time}</span>
+					<span class="AlbumPwd">${vo.pwdRequired}</span>
+				</div>
+			</li>
+			</a>		
+		</c:forEach>
+		</ul>
+	</main>
 </body>
 </html>
