@@ -64,7 +64,7 @@
 				</div>
 				<div id="nameBox">
 					<span>앨범 제목</span>
-					<input type="text" name="albumName" id="albumName" placeholder="제목을 입력해 주세요." >
+					<input type="text" id="albumName" placeholder="제목을 입력해 주세요." >
 					<button type="button" id="submitButton">보내기</button>
 				</div>
 			</div>

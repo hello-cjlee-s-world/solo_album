@@ -216,23 +216,28 @@ document.getElementById('submitButton').addEventListener('click', () => {
 		formData.append('pwdRequired', document.querySelector('input[name="pwdRequired"]:checked').value);
 		formData.append('pwd', document.querySelector('#pwd').value);
 		formData.append('albumName', document.querySelector('#albumName').value);
-
-		fetch('insertPhotos.do', {
+		
+		fetch('insertPhotos', {
 			method: 'POST',
 			cache: 'no-cache',
 			body: formData
 		})
-		//.then((response) => response.json())
-		.then((loc) => {
+		.then(response => {
+		    if (!response.ok) {
+			  throw new Error('Network response was not ok');
+			}
+			return response.text();
+		})
+		.then(data => {
+			console.log(data);
 			formData.delete('uploadFile');
 			formData.delete('imgAlbumDic');
 			formData.delete('pagePerImage');
 			formData.delete('pwdRequired');
 			formData.delete('pwd');
 			formData.delete('albumName');
-			
-			console.log(loc);
-			//location.href=loc.url;
+			alert('앨범 등록이 완료되었습니다.');
+			location.href = data;
 		})
 		.catch((err) => {
 			console.error(err);

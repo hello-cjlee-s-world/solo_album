@@ -164,9 +164,21 @@ html, body, form {
 	transition: 0.3s;
 }
 #mainContainer #informationContainer #buttonBox button:hover {
-	transform: scale(1.02);
+	transform: scale(1.05);
 	box-shadow: 0px 0px 3px green;
 	cursor: pointer;
+	background-color: green;
+	color: white;
+}
+#mainContainer #informationContainer #buttonBox button:active {
+	transform: scale(1.2);
+	box-shadow: 0px 0px 50px green;
+}
+#mainContainer #informationContainer #buttonBox .restButton {
+	opacity: 0;
+}
+#mainContainer #informationContainer #buttonBox .restButton:hover {
+	cursor: default;
 }
 #mainContainer #informationContainer #pageBox {
 	height: 3%;
@@ -271,10 +283,8 @@ html, body, form {
 	background-color: #BCFFB5;
 	cursor: pointer;
 }
-.pages .restBox{
+.pages .restBox {
 	display: none;
 }
-.restButton{
-	opacity: 0;
-}
+
 

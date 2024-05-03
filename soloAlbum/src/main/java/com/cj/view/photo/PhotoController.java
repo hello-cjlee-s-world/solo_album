@@ -2,13 +2,10 @@ package com.cj.view.photo;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.System.Logger;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,9 +15,6 @@ import java.util.UUID;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javax.imageio.ImageIO;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,18 +46,21 @@ public class PhotoController {
 	private PhotoService photoService;
 
 	// @RequestMapping(value = "/index", method = RequestMethod.GET)
-	@RequestMapping("/home.do")
+	@RequestMapping("/setPhotos.do")
 	public String photoHome() {
-		return "photoHome";
+		return "setPhotos";
 	}
 
 	// 사진 등록
-	@SuppressWarnings("null")
-	@RequestMapping(value = "/insertPhotos.do", method = RequestMethod.POST)
-	public String insertPhotos(@RequestParam("uploadFile") List<MultipartFile> multiFileList,
-			HttpServletRequest request, AlbumVO albumVO) throws IllegalStateException, IOException {
+	@SuppressWarnings({ "null", "rawtypes" })
+	@RequestMapping(value = "/insertPhotos", method = RequestMethod.POST)
+	public ResponseEntity insertPhotos(@RequestParam("uploadFile") List<MultipartFile> multiFileList,
+			HttpServletRequest request, AlbumVO albumVO, HttpServletResponse response) throws IllegalStateException, IOException {
+
 		PhotoVO vo = new PhotoVO();
-		
+		String message = "";
+		String redirectUrl = "";
+        Map<String, String> responseMap = new HashMap();
 		@SuppressWarnings("unchecked")
 		// js에서 dict 형태로 들어온 데이터 json으로 변환하기 위한 클래스
 		// 이미지:앨범 구역 맵핑 정보
@@ -87,6 +84,8 @@ public class PhotoController {
 		albumVO.setId(albumNum);
 		albumVO.setUserid(getCookie(request, "userType"));
 		albumVO.setPagePerImage(pagePerImageString);
+		albumVO.setCreate_timestamp(new Timestamp(System.currentTimeMillis()));
+		albumVO.setCreate_time(new java.sql.Date(System.currentTimeMillis()));
 		System.out.println(albumVO.toString());
 		photoService.insertAlbum(albumVO);
 		
@@ -111,7 +110,7 @@ public class PhotoController {
 				map.put("changeFile", changeFile);
 
 				fileList.add(map);
-				// blob 인 이미지 제외한 정상 이미지만 새 list에 담기
+				// 파일명이 blob 인 이미지 제외한 정상 이미지만 새 list에 담기
 				fileNameList.add(multiFileList.get(i));
 			}
 		}
@@ -121,17 +120,20 @@ public class PhotoController {
 			for (int i = 0; i < fileNameList.size(); i++) {
 				String changeFile = fileList.get(i).get("changeFile");
 				File uploadFile = new File(root + "\\" + changeFile);
-				//System.out.println(uploadFile);
 				fileNameList.get(i).transferTo(uploadFile);
 				vo.setName(changeFile);
 				vo.setOrder_num(Integer.parseInt(imgAlbumDic.get(fileNameList.get(i).getOriginalFilename())));
-				//System.out.println(albumNum);
 				vo.setAlbumId(albumNum);
 				photoService.insertPhoto(vo);
 			}
-			System.out.println("다중 파일 업로드 성공");
-
-			return "photoHome";
+	        message = "File uploaded successfully";
+	        redirectUrl = "/albumList.do";
+			responseMap.put("message", message);
+			responseMap.put("redirectUrl", redirectUrl);
+			System.out.println(message);
+	        //return ResponseEntity.ok().body(responseMap);
+			return ResponseEntity.ok().body("albumList.do");
+			//return 200;
 		} catch (Exception e) {
 			e.printStackTrace();
 			// 만약 업로드 실패하면 파일 삭제
@@ -139,8 +141,12 @@ public class PhotoController {
 				System.out.println("다중 파일 업로드 실패");
 				new File(root + "\\" + fileList.get(i).get("changeFile")).delete();
 			}
+			message = "File upload failed: " + e.getMessage();
+			responseMap.put("message", message);
+			System.out.println(message);
+			//return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseMap);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("fail");
 		}
-		return "redirect:index.jsp";
 	}
 
 	// 앨범 목록 표출
@@ -149,6 +155,7 @@ public class PhotoController {
 		AlbumVO vo = new AlbumVO();
 		vo.setUserid(getCookie(request, "userType"));
 		List<AlbumVO> voList = photoService.getAllAlbum(vo);
+		System.out.println(voList.get(30).toString());
 		model.addAttribute("voList", voList);
 		return "albumList";
 	}

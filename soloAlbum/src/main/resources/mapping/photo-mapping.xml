@@ -20,14 +20,40 @@
 	<!-- album 관련 -->
 	<insert id="insertAlbum">
 		<if test="pwdRequired.equals('n') or pwdRequired == null">
-			INSERT INTO albums(id, userid, pagePerImage, albumName)
-			VALUES(#{id},
-			#{userid}, #{pagePerImage}, #{albumName})
+			INSERT INTO albums(
+				id,
+				userid,	
+				pagePerImage,
+				albumName,
+				create_timestamp,
+				create_time)
+			VALUES(
+				#{id},
+				#{userid},
+				#{pagePerImage},
+				#{albumName},
+				#{create_timestamp},
+				#{create_time})
 		</if>
 		<if test="pwdRequired.equals('y')">
-			INSERT INTO albums(id, userid, pagePerImage, pwdRequired,
-			pwd, albumName)
-			VALUES(#{id}, #{userid}, #{pagePerImage}, #{pwdRequired}, #{pwd}, #{albumName})
+			INSERT INTO albums(
+				id, 
+				userid, 
+				pagePerImage, 
+				pwdRequired,
+				pwd, 
+				albumName, 
+				create_timestamp, 
+				create_time)
+			VALUES(
+				#{id},
+				#{userid}, 
+				#{pagePerImage}, 
+				#{pwdRequired}, 
+				#{pwd}, 
+				#{albumName},
+				#{create_timestamp}, 
+				#{create_time})
 		</if>
 	</insert>
 	<select id="getMaxAlbum" resultType="Integer">
@@ -39,19 +65,16 @@
 	</select>
 	<select id="getAllAlbum" resultType="album">
 		SELECT * FROM albums
-	    <if test="userid != null and !userid.isEmpty()">
-		WHERE userid=#{userid}
+		<if test="userid != null and !userid.isEmpty()">
+			WHERE userid=#{userid}
 		</if>
 	</select>
 	<select id="getPagePerImage" resultType="String">
 		SELECT pagePerImage FROM
 		albums WHERE id=#{albumId}
 	</select>
-	<!-- <select id="getAlbumPwd" resultType="String">
-		SELECT * FROM
-		albums
-		WHERE id=#{albumId}
-	</select> -->
+	<!-- <select id="getAlbumPwd" resultType="String"> SELECT * FROM albums 
+		WHERE id=#{albumId} </select> -->
 
 
 

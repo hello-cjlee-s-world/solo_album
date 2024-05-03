@@ -78,9 +78,10 @@ buttonNext.addEventListener('click', () => {
 			// 페이지 표출
 			totalPageNum.innerText  = page;
 			currentPageNum.innerText  = currentPage;
-	} else if(currentPage == 10) {
-		console.log('최대 페이지는 10입니다.');
-	}
+	} 
+	//else if(currentPage == 10) {
+	//	alert('최대 페이지는 10장입니다.');
+	//}
 	
 	
 });
