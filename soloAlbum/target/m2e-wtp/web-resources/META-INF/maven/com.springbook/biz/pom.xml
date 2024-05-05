@@ -15,6 +15,12 @@
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
 	<dependencies>
+		<!-- bouncyCastle -->
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+			<version>1.68</version> <!-- 최신 버전으로 변경 가능 -->
+		</dependency>
 		<!-- H2 데이터베이스 -->
 		<dependency>
 			<groupId>com.h2database</groupId>

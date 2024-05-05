@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,16 +40,22 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cj.soloAlbum.album.AlbumVO;
 import com.cj.soloAlbum.photo.PhotoVO;
 import com.cj.soloAlbum.photo.impl.PhotoService;
+import com.cj.soloAlbum.util.Common;
 
+@CrossOrigin(origins = "http://localhost:8080")
 @Controller
 @SessionAttributes("photo")
 public class PhotoController {
 	@Autowired
 	private PhotoService photoService;
-
+	private Common common = new Common();
+	
 	// @RequestMapping(value = "/index", method = RequestMethod.GET)
 	@RequestMapping("/setPhotos.do")
-	public String photoHome() {
+	public String photoHome(HttpServletRequest request) throws Exception {
+		if(common.verifySession(request)) {
+			return "redirect:index.jsp";
+		}
 		return "setPhotos";
 	}
 
@@ -56,7 +64,9 @@ public class PhotoController {
 	@RequestMapping(value = "/insertPhotos", method = RequestMethod.POST)
 	public ResponseEntity insertPhotos(@RequestParam("uploadFile") List<MultipartFile> multiFileList,
 			HttpServletRequest request, AlbumVO albumVO, HttpServletResponse response) throws IllegalStateException, IOException {
-
+		if(common.verifySession(request)) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Your Session is expired or broken");
+		}
 		PhotoVO vo = new PhotoVO();
 		String message = "";
 		String redirectUrl = "";
@@ -82,7 +92,7 @@ public class PhotoController {
 			albumNum = String.valueOf(photoService.getMaxAlbum() + 1);
 		}
 		albumVO.setId(albumNum);
-		albumVO.setUserid(getCookie(request, "userType"));
+		albumVO.setUserid(common.getCookie(request, "userType"));
 		albumVO.setPagePerImage(pagePerImageString);
 		albumVO.setCreate_timestamp(new Timestamp(System.currentTimeMillis()));
 		albumVO.setCreate_time(new java.sql.Date(System.currentTimeMillis()));
@@ -152,10 +162,12 @@ public class PhotoController {
 	// 앨범 목록 표출
 	@RequestMapping(value="/albumList.do", method = RequestMethod.GET)
 	public String showAlbumList(HttpServletRequest request, Model model) {
+		if(common.verifySession(request)) {
+			return "redirect:index.jsp";
+		}
 		AlbumVO vo = new AlbumVO();
-		vo.setUserid(getCookie(request, "userType"));
+		vo.setUserid(common.getCookie(request, "userType"));
 		List<AlbumVO> voList = photoService.getAllAlbum(vo);
-		System.out.println(voList.get(30).toString());
 		model.addAttribute("voList", voList);
 		return "albumList";
 	}
@@ -163,7 +175,7 @@ public class PhotoController {
 	// 앨범 표출 
 	@RequestMapping(value = "/showPhotos.do", method = RequestMethod.GET)
 	public String insertPhotos(HttpServletRequest request, Model model) throws IOException {
-		String user = getCookie(request, "user");
+		String user = common.getCookie(request, "user");
 		// patameter로(query String) 넘어오는 albumId
 		String albumId = request.getParameter("albumId");
 		System.out.println(albumId);
@@ -237,19 +249,7 @@ public class PhotoController {
 			return Json;
 		}
 	}
-	
 
-	// 쿠키 가져오기
-	public String getCookie(HttpServletRequest request, String sName) {
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			for (int i = 0; i < cookies.length; i++) {
-				String name = cookies[i].getName();
-				if (name != null && name.equals(sName)) {
-					return cookies[i].getValue();
-				}
-			}
-		}
-		return null;
-	}
+	
+	
 }

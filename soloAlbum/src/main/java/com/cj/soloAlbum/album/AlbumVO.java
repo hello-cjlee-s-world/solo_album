@@ -50,7 +50,6 @@ public class AlbumVO {
 	}
 	public void setAlbumName(String albumName) {
 		this.albumName = albumName;
-		System.out.println(albumName);
 	}
 	public Timestamp getCreate_timestamp() {
 		return create_timestamp;
