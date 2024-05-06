@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -41,6 +42,7 @@ import com.cj.soloAlbum.album.AlbumVO;
 import com.cj.soloAlbum.photo.PhotoVO;
 import com.cj.soloAlbum.photo.impl.PhotoService;
 import com.cj.soloAlbum.util.Common;
+import com.cj.soloAlbum.util.Cypher;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @Controller
@@ -49,6 +51,7 @@ public class PhotoController {
 	@Autowired
 	private PhotoService photoService;
 	private Common common = new Common();
+	private Cypher cp = new Cypher();
 	
 	// @RequestMapping(value = "/index", method = RequestMethod.GET)
 	@RequestMapping("/setPhotos.do")
@@ -63,7 +66,7 @@ public class PhotoController {
 	@SuppressWarnings({ "null", "rawtypes" })
 	@RequestMapping(value = "/insertPhotos", method = RequestMethod.POST)
 	public ResponseEntity insertPhotos(@RequestParam("uploadFile") List<MultipartFile> multiFileList,
-			HttpServletRequest request, AlbumVO albumVO, HttpServletResponse response) throws IllegalStateException, IOException {
+			HttpServletRequest request, AlbumVO albumVO, HttpServletResponse response) throws IllegalStateException, IOException, NoSuchAlgorithmException {
 		if(common.verifySession(request)) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Your Session is expired or broken");
 		}
@@ -96,6 +99,12 @@ public class PhotoController {
 		albumVO.setPagePerImage(pagePerImageString);
 		albumVO.setCreate_timestamp(new Timestamp(System.currentTimeMillis()));
 		albumVO.setCreate_time(new java.sql.Date(System.currentTimeMillis()));
+		if(!albumVO.getPwd().equals("") 
+			|| !albumVO.getPwd().isEmpty() 
+			|| albumVO.getPwd() != null 
+			|| "null".equals(albumVO.getPwd())) {
+				albumVO.setPwd(cp.makePassword(0, "1", albumVO.getPwd()));
+			}
 		System.out.println(albumVO.toString());
 		photoService.insertAlbum(albumVO);
 		
@@ -223,12 +232,11 @@ public class PhotoController {
 	@RequestMapping(value = "/pwdCheck", method = RequestMethod.POST)
 	@ResponseBody // json 형식으로 데이터 반환하기 위해 붙임
 	public String pwdCheck(@RequestParam("albumId") String albumId, 
-			@RequestParam("pwd") String pwd) throws JsonProcessingException {
-		System.out.println(pwd);
-		System.out.println(albumId);
+			@RequestParam("pwd") String pwd) throws JsonProcessingException, NoSuchAlgorithmException {
 		Map<String, Object> resultMap = new HashMap();
 		AlbumVO albumvo = photoService.getAlbum(albumId);
-		if(albumvo.getPwd().equals(pwd)) {
+									// encoded password 
+		if(albumvo.getPwd().equals(cp.makePassword(0, "1", pwd))) {
 			// 페이지당 사진 수 가져와서 dict 형태로 변환
 			List<PhotoVO> resultVO = photoService.getPhoto(albumId);
 			String[] pagePerImageList = albumvo.getPagePerImage().split("");

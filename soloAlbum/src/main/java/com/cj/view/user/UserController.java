@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.cj.soloAlbum.user.UserVO;
 import com.cj.soloAlbum.user.impl.UserService;
 import com.cj.soloAlbum.util.Common;
-import com.cj.soloAlbum.util.Cyper;
+import com.cj.soloAlbum.util.Cypher;
 
 @Controller
 @SessionAttributes("user")
 public class UserController {
 	@Autowired
 	private UserService userService;
-	Cyper cp = new Cyper(); 
+	Cypher cp = new Cypher(); 
 	
 	// @RequestMapping(value = "/index", method = RequestMethod.GET)
 	@RequestMapping("/login.do")

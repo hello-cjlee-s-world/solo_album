@@ -94,7 +94,7 @@ if('${pwdRequired}' === 'y') {
 				response.json().then(data => {
 					document.querySelector('#pwdContainer').style.opacity = '0';
 					document.querySelector('#mainContainer').style.opacity = '1';
-					
+
 					const photosInfo = data.photosInfo;
 					const pagePerImage = data.pagePerImageMap;
 					const albumName = data.albumName;
@@ -104,7 +104,7 @@ if('${pwdRequired}' === 'y') {
 					photosInfo.forEach(info => {
 						imgAlbumDic[Number(info.order_num)] = info.name;
 					});
-					
+					console.log(imgAlbumDic);
 					makeBoxs(imgAlbumDic);
 				});
 		})
@@ -124,9 +124,9 @@ if('${pwdRequired}' === 'y') {
 // 앨범 가져오는 함수   // 순서:파일명 객체
 function makeBoxs (imgAlbumDic){
 	// 앨범이 한페이지에 4장이므로 4의 배수 맞추기 위한 수
-	const maxNum = Math.max(...Object.keys(imgAlbumDic));
-	const plusNum = maxNum % 4;
-	
+	const maxNum = Math.max(...Object.keys(imgAlbumDic)) + 1;
+	const plusNum = 4 - (maxNum % 4);
+
 	for(let i=0; i<(maxNum+plusNum); i++) {	
 		const albumBox = document.createElement('div');
 		const img = document.createElement('img');

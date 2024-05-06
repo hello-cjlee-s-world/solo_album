@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class Common {
-	Cyper cp = new Cyper();
+	Cypher cp = new Cypher();
 	// 쿠키 설정
 	public void setCookie(HttpServletResponse response, String sName, String sValue) {
 		Cookie c = new Cookie( sName, sValue );
