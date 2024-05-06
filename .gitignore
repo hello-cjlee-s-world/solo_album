@@ -25,3 +25,5 @@ replay_pid*
 
 # config files
 *.properties
+HAS160*
+Cypher*
