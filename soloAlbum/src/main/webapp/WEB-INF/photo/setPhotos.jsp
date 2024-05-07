@@ -11,11 +11,11 @@
 <body>
 	<!-- 사진 선택 -->
 	<form action="insertPhotos.do" method="post"
-		enctype="multipart/form-data" id="insertPhotosForm">
-		<div id="photoContainer">
-			<div id="imgBox">
+		enctype="multipart/form-data" id="insert_photos_form">
+		<div id="photo_container">
+			<div id="img_box">
 				<div>
-					<div onclick="handleClick()" id="photoButton">
+					<div onclick="handleClick()" id="photo_button">
 						<img src="./public/img/addIcon.png">
 					</div>
 					<input type="file" id="files" name="uploadFile" accept="image/*"
@@ -26,31 +26,30 @@
 
 
 		<!-- 앨범 구역 -->
-		<div id="mainContainer">
-			<div id="pageContainer">
+		<div id="main_container">
+			<div id="page_container">
 				<div class="pages left_page">
-					<div id="albumBox1" class="albumBox page1" data-albumnum="0"></div>
-					<div id="albumBox2" class="albumBox page1" data-albumnum="1"></div>
+					<div id="album_box_1" class="album_box page_1" data-albumnum="0"></div>
+					<div id="album_box_2" class="album_box page_1" data-albumnum="1"></div>
 				</div>
-				<div class="pages rightPage">
-					<div id="albumBox3" class="albumBox page1" data-albumnum="2"></div>
-					<div id="albumBox4" class="albumBox page1" data-albumnum="3"></div>
+				<div class="pages right_page">
+					<div id="album_box_3" class="album_box page_1" data-albumnum="2"></div>
+					<div id="album_box_4" class="album_box page_1" data-albumnum="3"></div>
 				</div>
 			</div>
-			<div id="informationContainer">
-				<div id="buttonBox">
-					<button type="button" id="buttonPrevious" class='restButton'>이전 페이지</button>
-					<button type="button" id="buttonNext">다음 페이지</button>
-						
+			<div id="information_container">
+				<div id="button_box">
+					<button type="button" id="button_previous" class='rest_button'>이전 페이지</button>
+					<button type="button" id="button_next">다음 페이지</button>
 				</div>
-				<div id="pageBox">
+				<div id="page_box">
 					<div>
 						<span id="currentPageNum">1</span>/<span id="totalPageNum">1</span>
 					</div>
 				</div>
-				<div id="pwdBox">
+				<div id="pwd_box">
 					<span>앨범 비밀번호</span>
-					<div id="radioBox">
+					<div id="radio_box">
 						<div>
 							<label for="pwdRequired">사용안함</label>
 							<input type="radio" value="n"  name="pwdRequired" checked="checked">
@@ -64,13 +63,13 @@
 				</div>
 				<div id="nameBox">
 					<span>앨범 제목</span>
-					<input type="text" id="albumName" placeholder="제목을 입력해 주세요." >
-					<button type="button" id="submitButton">보내기</button>
+					<input type="text" id="album_name" placeholder="제목을 입력해 주세요." >
+					<button type="button" id="submit_button">보내기</button>
 				</div>
 			</div>
 
 		</div>
-		<div id="restBoxs"></div>
+		<div id="rest_boxs"></div>
 	</form>
 </body>
 <script src="./public/js/setPhotosTouched.js" charset="utf-8"></script>

@@ -11,7 +11,7 @@ html, body, form {
 #files {
 	display: none;
 }
-#img_box {
+#imgBox {
 	left:15px;
 	
 	margin-top: 20px;
@@ -25,7 +25,7 @@ html, body, form {
 	flex-wrap: nowrap;
 	overflow-x: scroll;
 }
-#photo_button {
+#photoButton {
 	width: 20vh;
 	height: 100px;
 	margin: 15px 15px;
@@ -36,11 +36,11 @@ html, body, form {
 	border-radius: 10%;
 	transition: 0.3s;
 }
-#photo_button:hover {
+#photoButton:hover {
 	transform: scale(1.05);
 	cursor: pointer;
 }
-#photo_button img {
+#photoButton img {
 	display: inline-block;
 	position: relative;
 	
@@ -90,7 +90,7 @@ html, body, form {
 	position:relative;
 	height: 80px;
 }
-#main_container {
+#mainContainer {
 	width: 90%;
 	height: 80%;
 /* position: relative 주면 이미지 드래그 이상하게 됨 */
@@ -102,7 +102,7 @@ html, body, form {
 	
 /* 	bottom: 0; */
 }
-#main_container #page_container{
+#mainContainer #pageContainer{
 	width: 80%;
 	height: 100%;
 	
@@ -124,7 +124,7 @@ html, body, form {
 	align-items: center;
 	flex-wrap: nowrap;
 }
-.pages .album_box {
+.pages .albumBox {
 	width: 200px;
 	height: 150px;
 	/* position: relative 주면 이미지 드래그 이상하게 됨 */
@@ -132,7 +132,7 @@ html, body, form {
 	background-color: beige; 
 }
 
-#main_container #information_container {
+#mainContainer #informationContainer {
 	width: 20%;
 	height: 75%;
 	margin-top: 5%;
@@ -143,7 +143,7 @@ html, body, form {
 	flex-wrap: nowrap;
 } 
 
-#main_container #information_container #button_box {
+#mainContainer #informationContainer #buttonBox {
 	width: 60%;
 	height: 22%;
 	margin-bottom:10px;
@@ -154,7 +154,7 @@ html, body, form {
 	align-items: center;
 	flex-wrap: nowrap;
 }
-#main_container #information_container #button_box button {
+#mainContainer #informationContainer #buttonBox button {
 	width: 80%;
 	height: 45%;
 	transition: 0.1s;
@@ -163,24 +163,24 @@ html, body, form {
 	box-shadow: 0px 0px 2px green;
 	transition: 0.3s;
 }
-#main_container #information_container #button_box button:hover {
+#mainContainer #informationContainer #buttonBox button:hover {
 	transform: scale(1.05);
 	box-shadow: 0px 0px 3px green;
 	cursor: pointer;
 	background-color: green;
 	color: white;
 }
-#main_container #information_container #button_box button:active {
+#mainContainer #informationContainer #buttonBox button:active {
 	transform: scale(1.2);
 	box-shadow: 0px 0px 50px green;
 }
-#main_container #information_container #button_box .rest_button {
+#mainContainer #informationContainer #buttonBox .restButton {
 	opacity: 0;
 }
-#main_container #information_container #button_box .rest_button:hover {
+#mainContainer #informationContainer #buttonBox .restButton:hover {
 	cursor: default;
 }
-#main_container #information_container #page_box {
+#mainContainer #informationContainer #pageBox {
 	height: 3%;
 	margin-bottom:10px;
 	
@@ -192,7 +192,7 @@ html, body, form {
 	
 	color: green;
 }
-#main_container #information_container #pwd_box {
+#mainContainer #informationContainer #pwdBox {
 	width: 100%;
 	height: 30%;
 	padding: 2%;
@@ -204,12 +204,12 @@ html, body, form {
 	
 	border: 2px solid green;
 }
-#main_container #information_container #pwd_box span {
+#mainContainer #informationContainer #pwdBox span {
 	font-size: 15px;
 	font-weight: 900;
 	color: green;
 }
-#main_container #information_container #pwd_box #radio_box {
+#mainContainer #informationContainer #pwdBox #radioBox {
 	width:100%;
 	display: flex;
 	flex-direction: row;
@@ -217,10 +217,10 @@ html, body, form {
 	align-items: center;
 	flex-wrap: nowrap;
 }
-#main_container #information_container #pwd_box #radio_box label {
+#mainContainer #informationContainer #pwdBox #radioBox label {
 	color: green;
 }
-#main_container #information_container #pwd_box #radio_box div {
+#mainContainer #informationContainer #pwdBox #radioBox div {
 	width: 45%;	
 	display: flex;
 	flex-direction: row;
@@ -228,12 +228,12 @@ html, body, form {
 	align-items: center;
 	flex-wrap: nowrap;
 }
-#main_container #information_container #pwd_box #radio_box div input:first-child{
+#mainContainer #informationContainer #pwdBox #radioBox div input:first-child{
 	margin-right: 20px;
 	font-size: 15px;
 	font-weight: 900;
 }
-#main_container #information_container #pwd_box #pwd {
+#mainContainer #informationContainer #pwdBox #pwd {
 	width: 85%;
 	font-size: 10px;
 	padding: 2% 1%;
@@ -241,7 +241,7 @@ html, body, form {
 	text-align: center;
 	border: 0.5px solid #7CCE76;
 }
-#main_container #information_container #nameBox {
+#mainContainer #informationContainer #nameBox {
 	width: 100%;
 	height: 30%;
 	padding: 2%;
@@ -253,12 +253,12 @@ html, body, form {
 	
 	border: 2px solid green;
 }
-#main_container #information_container #nameBox span {
+#mainContainer #informationContainer #nameBox span {
 	font-size: 15px;
 	font-weight: 900;
 	color: green;
 }
-#main_container #information_container #nameBox #album_name {
+#mainContainer #informationContainer #nameBox #albumName {
 	width: 85%;
 	font-size: 10px;
 	padding: 2% 1%;
@@ -266,7 +266,7 @@ html, body, form {
 	text-align: center;
 	border: 0.5px solid #7CCE76;
 }
-#main_container #information_container #nameBox button {
+#mainContainer #informationContainer #nameBox button {
 	width: 30%;
 	font-size: 13px;
 	font-weight: bold;
@@ -277,7 +277,7 @@ html, body, form {
 	background-color: #fff;
 	transition: 0.1s;
 }
-#main_container #information_container #nameBox button:hover {
+#mainContainer #informationContainer #nameBox button:hover {
 	tranform: scale(1.03);
 	color: #1A7913;
 	background-color: #BCFFB5;

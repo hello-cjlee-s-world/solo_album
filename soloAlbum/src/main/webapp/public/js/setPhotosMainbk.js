@@ -1,5 +1,5 @@
-const formData = new FormData(document.getElementById('insert_photos_form'));
-const imgBox = document.querySelector('#img_box');
+const formData = new FormData(document.getElementById('insertPhotosForm'));
+const imgBox = document.querySelector('#imgBox');
 const deletedPhoto = new Blob();
 let imgSwitch=0;
 let page = 1;
@@ -58,10 +58,10 @@ const fileChange = (input) => {
 					imgSmallBox.addEventListener("mousedown", function(e){
 					// 앨범 구역에 태그할때 구역에 이미지가 있는지 검색하는데, 
 					// 전역으로 해놓으면 페이지 넘어가도 이전 객체들을 그대로 바라보기 때문에 아래 객체들 여기 위치
-						const albumBox1 = document.getElementById('album_box_1');
-						const albumBox2 = document.getElementById('album_box_2');
-						const albumBox3 = document.getElementById('album_box_3');
-						const albumBox4 = document.getElementById('album_box_4');
+						const albumBox1 = document.getElementById('albumBox1');
+						const albumBox2 = document.getElementById('albumBox2');
+						const albumBox3 = document.getElementById('albumBox3');
+						const albumBox4 = document.getElementById('albumBox4');
 						
 						const albumBoxRect1 = albumBox1.getBoundingClientRect();
 						const albumBoxRect2 = albumBox2.getBoundingClientRect();
@@ -191,12 +191,12 @@ const handleClick = () => {
 }
 
 // 데이터 서버로 보내기
-document.getElementById('submit_button').addEventListener('click', () => {
+document.getElementById('submitButton').addEventListener('click', () => {
 	// 페이지당 이미지 갯수 세기
 	const pagePerImage = {};
 	for(let i=1; i < page+1; i++) {
 		pagePerImage[i] = 0;
-		const boxsInPage = document.querySelectorAll(`.page_${i}`);
+		const boxsInPage = document.querySelectorAll(`.page${i}`);
 		for(let j=0; j<boxsInPage.length; j++) {
 			if(boxsInPage[j].childElementCount > 0) {
 				pagePerImage[i] = pagePerImage[i]+1;		
@@ -215,7 +215,7 @@ document.getElementById('submit_button').addEventListener('click', () => {
 		formData.append('pagePerImage', JSON.stringify(pagePerImage));
 		formData.append('pwdRequired', document.querySelector('input[name="pwdRequired"]:checked').value);
 		formData.append('pwd', document.querySelector('#pwd').value);
-		formData.append('albumName', document.querySelector('#album_name').value);
+		formData.append('albumName', document.querySelector('#albumName').value);
 		
 		fetch('insertPhotos', {
 			method: 'POST',
