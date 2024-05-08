@@ -61,7 +61,7 @@
 					</div>
 					<input type="password" name="pwd" id="pwd" placeholder="비밀번호를 입력해 주세요." >
 				</div>
-				<div id="nameBox">
+				<div id="name_box">
 					<span>앨범 제목</span>
 					<input type="text" id="album_name" placeholder="제목을 입력해 주세요." >
 					<button type="button" id="submit_button">보내기</button>

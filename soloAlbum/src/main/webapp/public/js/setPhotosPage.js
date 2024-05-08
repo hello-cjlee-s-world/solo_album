@@ -12,21 +12,19 @@ let currentPage = 1;
 buttonNext.addEventListener('click', () => {
 	// 다음 페이지가 이미 생성되어 있다면
 	if(page > currentPage && page <= 10){
-		// 다음 page앨범구역 불러오기 
-		const albumBoxNext = document.querySelectorAll(`.page_${currentPage+1}`);
-		// 페이지 변경
 		for(let i=0; i<4; i++){
 		//	기존 앨범구역 제거
 			const albumBoxCurrent = document.querySelector(`#album_box_${i+1}`);
 			albumBoxCurrent.removeAttribute('id');
-			albumBoxCurrent.classList.add('restBox');
-			albumBoxCurrent.classList.remove('album_box');
+			albumBoxCurrent.classList.add('rest_box');
 			restBoxs.appendChild(albumBoxCurrent);
+			
+		// 다음 page앨범구역 불러오기 
+		const albumBoxNext = document.querySelectorAll(`.page_${currentPage+1}`);
 		// leftPage, rightPage 나눠서 표출
 		//	albumBox1 ~ 4 id 로 주기
 			albumBoxNext[i].setAttribute('id', `album_box_${i+1}`);	
-			albumBoxNext[i].classList.add('album_box');
-			albumBoxNext[i].classList.remove('restBox');
+			albumBoxNext[i].classList.remove('rest_box');
 			
 			if(i < 2){
 				pages[0].appendChild(albumBoxNext[i]);
@@ -34,7 +32,8 @@ buttonNext.addEventListener('click', () => {
 				pages[1].appendChild(albumBoxNext[i]);
 			}
 		}
-	
+		
+		// 페이지 관련 변수 변화
 		currentPage++;
 		if(currentPage > 1){
 			buttonPrevious.classList.remove('rest_button');
@@ -44,17 +43,16 @@ buttonNext.addEventListener('click', () => {
 		}
 		// 페이지 표출
 		currentPageNum.innerText  = currentPage;
+		
 	// 다음페이지가 없다면 생성	
 	} else if (page == currentPage && page < 10) {
 		for(let i=0; i<4; i++){
 			//	기존 앨범구역 제거 후, id 변경, class 변경
-				const albumBoxPrevious = document.querySelector(`#album_box_${i+1}`);
-				albumBoxPrevious.removeAttribute('id');
-				albumBoxPrevious.classList.add('restBox');
-			// 페이지 생성 시 page(숫자) class에 추가되도록 수정하여 아래 코드는 폐기
-			//	albumBoxPrevious.classList.add(`page_${currentPage}`);
-				albumBoxPrevious.classList.remove('album_box');
-				restBoxs.appendChild(albumBoxPrevious);
+			const albumBoxCurrent = document.querySelector(`#album_box_${i+1}`);
+			albumBoxCurrent.removeAttribute('id');
+			albumBoxCurrent.classList.add('rest_box');
+			restBoxs.appendChild(albumBoxCurrent);
+			
 			// 새 앨범구역 생성 후 id, class, data-albumnum 세팅, mainContainer에 추가
 				const albumBox = document.createElement('div');
 				albumBox.classList.add('album_box');
@@ -67,6 +65,8 @@ buttonNext.addEventListener('click', () => {
 					pages[1].appendChild(albumBox);
 				}
 			}
+			
+			// 페이지 관련 변수 변화
 			page++;  
 			currentPage++;
 			if(currentPage > 1){
@@ -90,28 +90,30 @@ buttonNext.addEventListener('click', () => {
 // 이전 버튼을 누르면
 buttonPrevious.addEventListener('click', () => {
 	if(currentPage > 1){
-	// 이전 page앨범구역 불러오기 
-		const albumBoxPrevious = document.querySelectorAll(`.page_${currentPage-1}`);
 		// 페이지 변경
 		for(let i=0; i<4; i++){
 		//	기존 앨범구역 제거
-			const albumBoxCurrent = document.querySelector(`#album_box_${i+1}`);
-			albumBoxCurrent.removeAttribute('id');
-			albumBoxCurrent.classList.add(`page_${currentPage}`);
-			albumBoxCurrent.classList.remove('album_box')
-			restBoxs.appendChild(albumBoxCurrent);
+		const albumBoxCurrent = document.querySelector(`#album_box_${i+1}`);
+		albumBoxCurrent.removeAttribute('id');
+		albumBoxCurrent.classList.add(`page_${currentPage}`);
+		albumBoxCurrent.classList.add('rest_box');
+		restBoxs.appendChild(albumBoxCurrent);
+			
+		// 이전 page앨범구역 불러오기 
+		const albumBoxPrevious = document.querySelectorAll(`.page_${currentPage-1}`);
 		// leftPage, rightPage 나눠서 표출
 		//	albumBox1 ~ 4 id 로 주기
-			albumBoxPrevious[i].setAttribute('id', `album_box_${i+1}`);	
-			albumBoxPrevious[i].classList.add('album_box');
-			albumBoxPrevious[i].classList.remove('restBox');
-			if(i < 2){
-				pages[0].appendChild(albumBoxPrevious[i]);
-			} else {
-				pages[1].appendChild(albumBoxPrevious[i]);
-			}
+		albumBoxPrevious[i].setAttribute('id', `album_box_${i+1}`);	
+		albumBoxPrevious[i].classList.remove('rest_box');
+		
+		if(i < 2){
+			pages[0].appendChild(albumBoxPrevious[i]);
+		} else {
+			pages[1].appendChild(albumBoxPrevious[i]);
 		}
-	
+	}
+		
+		// 페이지 관련 변수 변화
 		currentPage--;
 		if(currentPage == 1){
 			buttonPrevious.classList.add('rest_button'); 

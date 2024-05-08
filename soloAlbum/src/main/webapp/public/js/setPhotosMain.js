@@ -26,8 +26,8 @@ const fileChange = (input) => {
 					
 					img.src = newURL;
 					img.classList.add('preview');
-					imgSmallBox.draggable="true";
-					imgSmallBox.classList.add('imgSmallBox');
+					//imgSmallBox.draggable="true";
+					imgSmallBox.classList.add('img_small_box');
 					//imgSmallBox.setAttribute('data-num', String(num));
 					imgSmallBox.setAttribute('data-name', input.files[i].name);
 					num += 1
@@ -52,6 +52,7 @@ const fileChange = (input) => {
 						// blob URL 삭제
 						URL.revokeObjectURL(xButton.parentNode.childNodes[0].src);
 						xButton.parentNode.parentNode.removeChild(xButton.parentNode);
+						album_box_naming();
 					});
 					
 					// img 드래그를 위한 코드
@@ -82,7 +83,7 @@ const fileChange = (input) => {
 					    function startMove(e) {
 						    imgSwitch=1;
 						    imgSmallBox.style.position = 'absolute';
-						    //imgSmallBox.style.boxShadow = '2px 2px 20px 10px grey'
+						    
 						    const clientRect = imgSmallBox.getBoundingClientRect();
 						    // 이미지 드래그시 마우스 위치의 좌표로 이동
 						    imgSmallBox.style.left = e.clientX - (clientRect.width/2) + 'px';
@@ -91,28 +92,28 @@ const fileChange = (input) => {
 						    // 구역 접촉 시 이벤트 구역 1~4번
 						    if(touched(clientRect, tX1, tY1, tW1, tH1)){
 						    	if(albumBox1.childElementCount < 1){
-								    albumBox1.style.border='7px solid blue';
+								    albumBox1.style.border='7px solid green';
 						    	}
 						    } else {
 						   		 albumBox1.style.border='none'
 						    }
 						    if(touched(clientRect, tX2, tY2, tW2, tH2)){
 						    	if(albumBox2.childElementCount < 1){
-									albumBox2.style.border='7px solid blue';
+									albumBox2.style.border='7px solid green';
 						    	}
 							} else {
 								 albumBox2.style.border='none'
 							}
 						    if(touched(clientRect, tX3, tY3, tW3, tH3)){
 						    	if(albumBox3.childElementCount < 1){
-									albumBox3.style.border='7px solid blue';
+									albumBox3.style.border='7px solid green';
 						    	}
 							} else {
 								 albumBox3.style.border='none'
 							}							
 							if(touched(clientRect, tX4, tY4, tW4, tH4)){
 								if(albumBox4.childElementCount < 1){
-									albumBox4.style.border='7px solid blue';
+									albumBox4.style.border='7px solid green';
 								}
 							} else {
 								 albumBox4.style.border='none'
@@ -132,30 +133,50 @@ const fileChange = (input) => {
 						    // 구역 안에서 놓았을 경우 이벤트 구역 1 ~ 4
 						    if(touched(clientRect, tX1, tY1, tW1, tH1)){
 								if(imgSwitch==1 && albumBox1.childElementCount < 1) {
+								
+								// 작업중=======================================================
+									imgSmallBox.classList.remove('img_small_box');
+									imgSmallBox.classList.add('album_box_img');
+									
 									albumBox1.appendChild(imgSmallBox);
+									albumBox1.classList.add('on');
 									imgAlbumDic[imgSmallBox.dataset.name] = albumBox1.dataset.albumnum;
 									imgSwitch=0;
 								}
 							} else if(touched(clientRect, tX2, tY2, tW2, tH2)) {
 								if(imgSwitch==1 && albumBox2.childElementCount < 1) {
+									imgSmallBox.classList.remove('img_small_box');
+									imgSmallBox.classList.add('album_box_img');
+									
 									albumBox2.appendChild(imgSmallBox);
+									albumBox2.classList.add('on');
 									imgAlbumDic[imgSmallBox.dataset.name] = albumBox2.dataset.albumnum;
 									imgSwitch=0;
 								}
 							} else if(touched(clientRect, tX3, tY3, tW3, tH3)) {
 								if(imgSwitch==1 && albumBox3.childElementCount < 1) {
+									imgSmallBox.classList.remove('img_small_box');
+									imgSmallBox.classList.add('album_box_img');
+									
 									albumBox3.appendChild(imgSmallBox);
+									albumBox3.classList.add('on');
 									imgAlbumDic[imgSmallBox.dataset.name] = albumBox3.dataset.albumnum;
 									imgSwitch=0;
 								}
 							} else if(touched(clientRect, tX4, tY4, tW4, tH4)) {
 								if(imgSwitch==1 && albumBox4.childElementCount < 1) {
+									imgSmallBox.classList.remove('img_small_box');
+									imgSmallBox.classList.add('album_box_img');
+									
 									albumBox4.appendChild(imgSmallBox);
+									albumBox4.classList.add('on');
 									imgAlbumDic[imgSmallBox.dataset.name] = albumBox4.dataset.albumnum;
 									imgSwitch=0;
 								}
 							} else { // 구역 바깥에서 놓았을 경우 이벤트
 							    if(imgSwitch==1) {
+									imgSmallBox.classList.remove('album_box_img');
+									imgSmallBox.classList.add('img_small_box');
 									imgBox.insertBefore(imgSmallBox, imgBox.childNodes[2]);
 									delete imgAlbumDic[imgSmallBox.dataset.name];			    
 								    imgSwitch=0;
@@ -169,6 +190,7 @@ const fileChange = (input) => {
 						    document.removeEventListener("mousemove", startMove);
 						    document.removeEventListener("mouseup", stopMove);
 						    
+	    					album_box_naming();
 						}
 					    
 					});
@@ -250,4 +272,15 @@ document.getElementById('submit_button').addEventListener('click', () => {
 });
 
 
+// albumBox에 자식이 없다면 class에 album_box_off 줌
+const album_box_naming = () => {
+	for(let i=1; i<5; i++){
+		const dummyBox = document.querySelector(`#album_box_${i}`)
+		if(dummyBox.childNodes.length === 0){
+			dummyBox.classList.remove('on');
+		} else if(dummyBox.childNodes.length > 0) {
+			dummyBox.classList.add('on');
+		}
+	}
+}
 
