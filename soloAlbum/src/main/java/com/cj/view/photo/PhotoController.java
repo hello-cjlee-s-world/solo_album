@@ -50,6 +50,11 @@ public class PhotoController {
 	private Common common = new Common();
 	private Cypher cp = new Cypher();
 	
+	@RequestMapping("/test.do")
+	public String test(HttpServletRequest request) throws Exception {
+		return "selfTest";
+	}
+	
 	// @RequestMapping(value = "/index", method = RequestMethod.GET)
 	@RequestMapping("/setPhotos.do")
 	public String photoHome(HttpServletRequest request) throws Exception {

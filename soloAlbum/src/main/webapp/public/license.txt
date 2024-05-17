@@ -1,0 +1,11 @@
+Model Information:
+* title:	Apollo 17, 1972
+* source:	https://sketchfab.com/3d-models/apollo-17-1972-67b69963f2094ea7a9c3e1024b54dc75
+* author:	Patrick (https://sketchfab.com/patrick-)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Apollo 17, 1972" (https://sketchfab.com/3d-models/apollo-17-1972-67b69963f2094ea7a9c3e1024b54dc75) by Patrick (https://sketchfab.com/patrick-) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
