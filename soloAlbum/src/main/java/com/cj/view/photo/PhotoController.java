@@ -52,6 +52,11 @@ public class PhotoController {
 	
 	@RequestMapping("/test.do")
 	public String test(HttpServletRequest request) throws Exception {
+		return "test";
+	}
+
+	@RequestMapping("/selfTest.do")
+	public String selfTest(HttpServletRequest request) throws Exception {
 		return "selfTest";
 	}
 	
