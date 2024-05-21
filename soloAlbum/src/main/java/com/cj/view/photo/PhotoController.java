@@ -56,7 +56,22 @@ public class PhotoController {
 	}
 
 	@RequestMapping("/selfTest.do")
-	public String selfTest(HttpServletRequest request) throws Exception {
+	public String selfTest(HttpServletRequest request, Model model) throws Exception {
+		List<PhotoVO> resultVO = photoService.getPhoto("154");
+		
+		// 페이지당 사진 수 가져와서 dict 형태로 변환
+		String[] pagePerImageList = photoService.getPagePerImage("154").split("");
+		Map<Integer, Integer> pagePerImageMap = new HashMap<Integer, Integer>();
+		for(int i=0; i<pagePerImageList.length; i+=2) {
+			pagePerImageMap.put(Integer.parseInt(pagePerImageList[i]), 
+								Integer.parseInt(pagePerImageList[i+1]));
+		}
+		
+		String pagePerImageJson = new ObjectMapper().writeValueAsString(pagePerImageMap);
+		model.addAttribute("pagePerImage", pagePerImageJson);
+		model.addAttribute("photosInfo", resultVO);
+		System.out.println(resultVO.toString());
+		
 		return "selfTest";
 	}
 	
