@@ -16,7 +16,7 @@
 	perspective: 4200px;
 	perspective-origin: center;
 }
-#page {
+.page {
 	width: 400px;
 	height: 500px;
 	position: absolute;
@@ -28,8 +28,9 @@
 	transform-style: preserve-3d;
 	background-image: url(https://picsum.photos/420/300?random=1);
 	background-size: 100% 100%;
+	backface-visibility: hidden;
 	right: 50%;
-	animation: flip1 5s infinite ease-in-out;
+	/* animation: flip1 5s infinite ease-in-out; */
 }
 
 @keyframes flip1 {

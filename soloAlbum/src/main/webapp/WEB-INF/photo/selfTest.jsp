@@ -10,14 +10,31 @@
 </head>
 <body>
 	<div id="container">
-		<div id="page">
-			<h2>hello</h2>
-		</div>
+		<c:forEach items="${photosInfo}" var="info" varStatus="i">
+			<div class="page page${i.index}">
+				<h1>${i.index}</h1><br>
+				<h2>${info.name}</h2>
+			</div>
+		</c:forEach>
 	</div>
 </body>
 	<script>
-	<c:forEach items="${photosInfo}" var="info" varStatus="i">
-		console.log(${photosInfo.size()});		
-	</c:forEach>
+		const items = document.querySelectorAll('.page');
+		for(let i=0; i<items.length; i++) {
+				setTimeout(()=>{
+					items[i].animate(
+			                [
+			                    { transform: 'rotateX(15deg) rotateY(6deg)' },
+			                    { transform: 'rotateX(15deg) rotateY(174deg)'},
+			                ],
+			                {
+			                    duration: 8000,
+			                    easing: "ease-in-out",
+			                    iterations: Infinity,
+			                }
+			            );
+				}, (i+1)*1000);
+		}
+		//console.log(${photosInfo.size()});		
 	</script>
 </html>
