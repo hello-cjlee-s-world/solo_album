@@ -16,15 +16,53 @@
 	perspective: 4200px;
 	perspective-origin: center;
 }
-.page {
+.cover {
 	width: 400px;
 	height: 500px;
 	position: absolute;
 	top: 125px;
 	border: solid #555;
 	border-width: 2px 2px 2px 2px;
-
-	transform-origin: 100% 100%;
+	
+	transform: rotateX(15deg) rotateY(-6deg);
+	transform-origin: 0% 0%;
+	transform-style: preserve-3d;
+	background-image: url(https://picsum.photos/420/300?random=1);
+	background-size: 0% 0%;
+	backface-visibility: hidden;
+	left: 50%;
+	background-color: black;
+}
+.cover h1{
+	color: #fff;
+}
+.forwardPage {
+	width: 400px;
+	height: 500px;
+	position: absolute;
+	top: 125px;
+	border: solid #555;
+	border-width: 2px 2px 2px 2px;
+	
+	transform: rotateX(15deg) rotateY(-6deg);
+	transform-origin: 0% 0%;
+	transform-style: preserve-3d;
+	background-image: url(https://picsum.photos/420/300?random=1);
+	background-size: 100% 100%;
+	backface-visibility: hidden;
+	left: 50%;
+	/* animation: flip1 5s infinite ease-in-out; */
+}
+.reversePage{
+	width: 400px;
+	height: 500px;
+	position: absolute;
+	top: 125px;
+	border: solid #555;
+	border-width: 2px 2px 2px 2px;
+	
+	transform: rotateX(15deg) rotateY(174deg);
+	transform-origin: 100% 0%;
 	transform-style: preserve-3d;
 	background-image: url(https://picsum.photos/420/300?random=1);
 	background-size: 100% 100%;
