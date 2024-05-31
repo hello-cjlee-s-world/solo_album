@@ -63,7 +63,7 @@
 	                    duration: 5000,
 	                    easing: "ease-in-out",
 	                    iterations: Infinity,
-	                }
+	                },
 	            );
 		}
 		paperFlip(items[0], 174, 6);

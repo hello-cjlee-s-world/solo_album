@@ -16,7 +16,7 @@
 	perspective: 4200px;
 	perspective-origin: center;
 }
-.cover {
+.front_cover {
 	width: 400px;
 	height: 500px;
 	position: absolute;
@@ -36,7 +36,7 @@
 .cover h1{
 	color: #fff;
 }
-.forwardPage {
+.forward_page {
 	width: 400px;
 	height: 500px;
 	position: absolute;
@@ -53,7 +53,7 @@
 	left: 50%;
 	/* animation: flip1 5s infinite ease-in-out; */
 }
-.reversePage{
+.reverse_page{
 	width: 400px;
 	height: 500px;
 	position: absolute;
