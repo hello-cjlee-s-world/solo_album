@@ -23,7 +23,7 @@
 		<div id="page_container">
 			<div class="cover back_cover prev_page"></div>
 			<div id="back_cover" class="cover back_cover"></div>
-			<div id="front_cover" class="cover front_cover right"><h1>COVER</h1></div>
+			<div id="front_cover" class="cover front_cover"><h1>COVER</h1></div>
 			<div class="cover front_cover next_page"></div>
 			
 		</div>
@@ -116,6 +116,7 @@ function makePages(imgAlbumDic){
 	const maxNum = Math.max(...Object.keys(imgAlbumDic)) + 1;
 	const plusNum = 4 - (maxNum % 4 == 0 ? 4 : maxNum % 4);
 	const pageNum = (maxNum+plusNum)/2;
+	let n = 0;
 	
 	for(let i=0; i<pageNum; i++){
 		const page = document.createElement('div');
@@ -126,61 +127,30 @@ function makePages(imgAlbumDic){
 		page.classList.add('page'+i);
 		
 		for(let j=0; j<2; j++){
-			const n = i+j;
 			const albumBox = document.createElement('div');
 			const img = document.createElement('img');
 			albumBox.classList.add('album_box');
 			
 			//해당 위치에 사진이 등록되었다면 src를 설정, 아니라면 삭제 페이지 표출 
-			if(Object.keys(imgAlbumDic).includes(String(n))) 
+			if(Object.keys(imgAlbumDic).includes(String(n))){
 				img.src=imgSrc + imgAlbumDic[n];
-			else img.src='./public/img/deletedPhoto.png';
+			}
+			else {
+				img.src='./public/img/deletedPhoto.png';
+			}
 			
 			albumBox.appendChild(img);
 			page.appendChild(albumBox);
+			n++;
 		}
 		pageContainer.appendChild(page)
 	}
 	
-	/* for(let i=0; i<(maxNum+plusNum); i++) {	
-		const albumBox = document.createElement('div');
-		const img = document.createElement('img');
-		let boxNum = i % 4;
-		
-		// 4번째 사진까지는 화면에 표출, 나머지 사진은 restboxs구역에서 대기
-		if(i < 4){
-			albumBox.setAttribute('id', 'album_box_'+(boxNum+1));
-			albumBox.classList.add('album_box');
-			albumBox.classList.add('page_' + String(pageNum));
-			
-			if(Object.keys(imgAlbumDic).includes(String(i))) 
-				img.src=imgSrc + imgAlbumDic[i];
-			else img.src='./public/img/deletedPhoto.png';
-			albumBox.appendChild(img);
-			
-			if(boxNum < 2){
-				pages[0].appendChild(albumBox);
-			} else {
-				pages[1].appendChild(albumBox);
-			}
-			
-		} else {
-			albumBox.classList.add('page_' + String(pageNum));
-			if(Object.keys(imgAlbumDic).includes(String(i))) 
-				img.src=imgSrc + imgAlbumDic[i];
-			else img.src='./public/img/deletedPhoto.png';
-			albumBox.appendChild(img);
-			restBoxs.appendChild(albumBox);
-		}
-	} */
-	// 전체 페이지 표시
-	totalPage = pageNum;
+	// 전체 페이지 표시, 2장이 한면이라서 나누기 2
+	totalPage = (pageNum/2) + 2;
 	totalPageNum.innerText = totalPage;
 }
 
-
-
-	
 </script>
 <!-- page의 갯수가 onload될때 정해지기 때문에 이 script 아래로 와야한다. -->
 <script src="./public/js/showPhotosPage.js" charset="utf-8"></script>
