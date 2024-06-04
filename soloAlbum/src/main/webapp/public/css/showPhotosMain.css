@@ -21,7 +21,7 @@ html, body {
 }
 #pwd_container {
 	position: absolute;
-	z-index: 1400;
+	z-index: 100;
 }
 #pwd_container #pwd_button {
 }
@@ -48,26 +48,36 @@ html, body {
 	font-weight: bold;
 }
 .pages {
-	width:48%;
-	height:100%;
-	/* position: relative 주면 이미지 드래그 이상하게 됨 */
 	display:flex;
 	flex-direction: column;
 	justify-content: space-around;
 	align-items: center;
 	flex-wrap: nowrap;
-	z-index: 5;
+	width: 400px;
+	height: 500px;
+	position: absolute;
+	border: solid #494949;
+	border-width: 1px 1px 1px 1px;
+	border-radius: 0.5%;
+	box-shadow: 1px 1px 10px lightgray;
+	top: 5%;
+	transform-style: preserve-3d;
+	background-image: url("../img/recyclepaper.jpg");
+	background-color: #f5f5f5;
+	backface-visibility: hidden;
 }
 .pages .album_box {
 	height:30%;
 	padding: 6px;
 	background-color: white; 
 	box-shadow: 0px 0px 2px 0.5px lightgrey;
+	backface-visibility: hidden;
 	transform-style: preserve-3d;
 }
 .pages .album_box img {
 	height:100%;
 	box-shadow: 0px 0px 2px 0.5px lightgrey;
+	backface-visibility: hidden;
 	transform-style: preserve-3d;
 }
 .cover {
@@ -75,73 +85,61 @@ html, body {
 	height: 500px;
 	position: absolute;
 	top: 5%;
-	border: solid #555;
-	border-width: 2px 2px 2px 2px;
+	border: solid #494949;
+	border-width: 3px 3px 3px 3px;
+	border-radius: 0.5%;
 	transform-style: preserve-3d;
 	backface-visibility: hidden;
-	background-color: black;
-	z-index: 10;
+	background-image: url("../img/leatherCover.jpg");
+	background-size: 100%;
+	/* background-color: #77bbff; */
+	z-index: 99;
 }
 .cover h1{
-	color: #fff;
+	color: #494949;
 }
 .front_cover{
 	left: 50%;
-	transform: rotateX(15deg) rotateY(-6deg);
+	transform: rotateX(15deg) rotateY(-10deg);
 	transform-origin: 0% 0%;
-	z-index: 10;
 }
 .back_cover{
 	right: 50%;
-	transform: rotateX(15deg) rotateY(174deg);
+	transform: rotateX(15deg) rotateY(170deg);
 	transform-origin: 100% 0%;
-	z-index: 10;
 }
 .forward_page {
-	width: 400px;
-	height: 500px;
-	position: absolute;
-	border: solid #555;
-	border-width: 2px 2px 2px 2px;
-	top: 5%;
-	transform: rotateX(15deg) rotateY(-6deg);
+	transform: rotateX(15deg) rotateY(-10deg);
 	transform-origin: 0% 0%;
-	transform-style: preserve-3d;
-	background-color: #969696;
-	/* background-image: url(https://picsum.photos/420/300?random=1); 
-	background-size: 100% 100%;*/
-	backface-visibility: hidden;
 	left: 50%;
-	z-index: 2;
-	/* animation: flip1 5s infinite ease-in-out; */
 }
 .reverse_page {
+	transform: rotateX(15deg) rotateY(170deg);
+	transform-origin: 100% 0%;
+	right: 50%;
+}
+.prev_page {
 	width: 400px;
 	height: 500px;
 	position: absolute;
-	border: solid #555;
-	border-width: 2px 2px 2px 2px;
 	top: 5%;
-	transform: rotateX(15deg) rotateY(174deg);
-	transform-origin: 100% 0%;
-	transform-style: preserve-3d;
-	background-color: #969696;
-	/* background-image: url(https://picsum.photos/420/300?random=1); 
-	background-size: 100% 100%;*/
-	backface-visibility: hidden;
 	right: 50%;
-	z-index: 3;
-	/* animation: flip1 5s infinite ease-in-out; */
+	transform-origin: 100% 0%;
+	transform: rotateX(15deg) rotateY(10deg);
+	z-index: 100;
+	opacity: 0;
 }
 .next_page {
-	transform: rotateX(15deg) rotateY(-6deg);
+	width: 400px;
+	height: 500px;
+	position: absolute;
+	top: 5%;
+	left: 50%;
+	transform-origin: 0% 0%;
+	transform: rotateX(15deg) rotateY(-10deg);
 	z-index: 100;
 	opacity: 0;
 }
-.prev_page {
-	transform: rotateX(15deg) rotateY(6deg);
-	z-index: 100;
-	opacity: 0;
-}
+
 
 

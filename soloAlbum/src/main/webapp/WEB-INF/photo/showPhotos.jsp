@@ -21,11 +21,10 @@
 	<!-- 앨범 구역 -->
 	<div id="main_container">
 		<div id="page_container">
-			<div class="cover back_cover prev_page"></div>
-			<div id="back_cover" class="cover back_cover"></div>
-			<div id="front_cover" class="cover front_cover"><h1>COVER</h1></div>
-			<div class="cover front_cover next_page"></div>
-			
+			<div class="prev_page"></div>
+			<div class="cover front_cover"><h1>COVER</h1></div>
+			<div class="cover back_cover"></div>
+			<div class="next_page"></div>
 		</div>
 		<div id="page_box">
 			<span id="current_page_num">1</span>/<span id="total_page_num"></span>
@@ -125,6 +124,7 @@ function makePages(imgAlbumDic){
 		else page.classList.add('forward_page');
 		page.classList.add('pages');
 		page.classList.add('page'+i);
+
 		
 		for(let j=0; j<2; j++){
 			const albumBox = document.createElement('div');
@@ -143,8 +143,15 @@ function makePages(imgAlbumDic){
 			page.appendChild(albumBox);
 			n++;
 		}
-		pageContainer.appendChild(page)
+		pageContainer.appendChild(page);
 	}
+	
+	// zindex 초기화
+	let zValue = 0;
+	document.querySelectorAll('.pages').forEach(page => {
+		page.style.zIndex = String(zValue);	
+		zValue--;
+	});
 	
 	// 전체 페이지 표시, 2장이 한면이라서 나누기 2
 	totalPage = (pageNum/2) + 2;
