@@ -134,8 +134,7 @@ function makePages(imgAlbumDic){
 			//해당 위치에 사진이 등록되었다면 src를 설정, 아니라면 삭제 페이지 표출 
 			if(Object.keys(imgAlbumDic).includes(String(n))){
 				img.src=imgSrc + imgAlbumDic[n];
-			}
-			else {
+			} else {
 				img.src='./public/img/deletedPhoto.png';
 			}
 			

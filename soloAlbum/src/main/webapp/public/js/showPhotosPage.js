@@ -90,9 +90,10 @@ const buttonControll = () => {
 	setTimeout(() => {
 		nextArea.style.display = 'block';
 		prevArea.style.display = 'block';
-	} , duration - 500);
+	} , duration);
 }
-/*const pagefilp = () => {
+/*
+const pagefilp = () => {
 	let z = 0;
 	let trigger = 0;
 	if(currentPage == 1 || currentPage == totalPage) return;
@@ -121,7 +122,7 @@ const buttonControll = () => {
 	} , duration/2)
 }*/
 
-/*
+
 let lIndex = 0;
 let rIndex = totalPage;
 const pagefilp = (direction) => {
@@ -157,4 +158,4 @@ const pagefilp = (direction) => {
 		rIndex--;
 	}
 
-} /*
+} 

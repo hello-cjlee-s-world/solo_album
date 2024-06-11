@@ -9,6 +9,7 @@
 }
 html, body {
 	height: 100%;
+	user-select: none;
 }
 #background_container {
 	width: 100%;
@@ -59,7 +60,7 @@ html, body {
 	border: solid #494949;
 	border-width: 1px 1px 1px 1px;
 	border-radius: 0.5%;
-	box-shadow: 1px 1px 10px lightgray;
+
 	top: 5%;
 	transform-style: preserve-3d;
 	background-image: url("../img/recyclepaper.jpg");
